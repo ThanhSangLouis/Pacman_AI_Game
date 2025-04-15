@@ -5,6 +5,11 @@ from Algorithms.DFS import DFS
 from Algorithms.Expectimax import ExpectAgent
 from Algorithms.LocalSearch import local_search
 from Algorithms.Minimax import minimaxAgent
+from Algorithms.HillClimbing import hill_simple, hill_steepest, hill_random
+from Algorithms.Greedy import Greedy
+from Algorithms.BeamSearch import BeamSearch
+from Algorithms.UCS import UCS
+from Algorithms.IDASearch import IDAStar
 
 
 class SearchAgent:
@@ -31,3 +36,17 @@ class SearchAgent:
             return AlphaBetaAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
         if ALGORITHMS == "Expect":
             return ExpectAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
+        if ALGORITHMS == "Hill Simple":
+            return hill_simple(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "Hill Steepest":
+            return hill_steepest(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "Hill Random":
+            return hill_random(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "Greedy":
+            return Greedy(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "Beam Search":
+            return BeamSearch(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "UCS":
+            return UCS(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "IDA*":
+            return IDAStar(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)

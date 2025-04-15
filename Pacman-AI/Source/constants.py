@@ -4,7 +4,7 @@ LEVEL_TO_ALGORITHM = {
     "LEVEL1": "BFS",
     "LEVEL2": "BFS",
     "LEVEL3": "Local Search",
-    "LEVEL4": "A*"
+    "LEVEL4": "Minimax"
 }
 
 # DEFINE COLOR

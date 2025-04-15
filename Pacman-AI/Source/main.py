@@ -234,16 +234,50 @@ def startGame() -> None:
                 # Pacman move
                 if len(new_PacMan_Pos) > 0:
                     [old_row_Pac, old_col_Pac] = PacMan.getRC()
-                    [new_row_Pac, new_col_Pac] = new_PacMan_Pos
+                    
+                    # Fix for the "too many values to unpack" error
+                    # Ensure we only take the first two elements from new_PacMan_Pos
+                    if isinstance(new_PacMan_Pos, list):
+                        if len(new_PacMan_Pos) >= 2:
+                            # If new_PacMan_Pos is longer than 2 items, take only the first two
+                            new_row_Pac, new_col_Pac = new_PacMan_Pos[0], new_PacMan_Pos[1]
+                        else:
+                            # Handle case where new_PacMan_Pos is a list with nested lists
+                            if isinstance(new_PacMan_Pos[0], list) and len(new_PacMan_Pos[0]) >= 2:
+                                new_row_Pac, new_col_Pac = new_PacMan_Pos[0][0], new_PacMan_Pos[0][1]
+                            else:
+                                # Skip this iteration if format is unexpected
+                                is_moving = False
+                                continue
+                    else:
+                        # If it's not a list, skip this iteration
+                        is_moving = False
+                        continue
 
-                    if old_row_Pac < new_row_Pac:
-                        PacMan.move(1, 0) # di chuyển xuống dưới
-                    elif old_row_Pac > new_row_Pac:
-                        PacMan.move(-1, 0) # di chuyển lên trên
-                    elif old_col_Pac < new_col_Pac:
-                        PacMan.move(0, 1) # di chuyển sang phải
-                    elif old_col_Pac > new_col_Pac:
-                        PacMan.move(0, -1) # di chuyển sang trái
+                    # After extracting the values, make sure they are integers
+                    if isinstance(new_row_Pac, list):
+                        # Handle nested lists - extract the values properly
+                        if len(new_row_Pac) > 1:
+                            new_col_Pac = new_row_Pac[1]
+                            new_row_Pac = new_row_Pac[0]
+                        else:
+                            new_row_Pac = new_row_Pac[0]
+                    
+                    # Now that we have integers, compare and move
+                    if isinstance(new_row_Pac, int) and isinstance(new_col_Pac, int):
+                        if old_row_Pac < new_row_Pac:
+                            PacMan.move(1, 0) # di chuyển xuống dưới
+                        elif old_row_Pac > new_row_Pac:
+                            PacMan.move(-1, 0) # di chuyển lên trên
+                        elif old_col_Pac < new_col_Pac:
+                            PacMan.move(0, 1) # di chuyển sang phải
+                        elif old_col_Pac > new_col_Pac:
+                            PacMan.move(0, -1) # di chuyển sang trái
+                    else:
+                        # If we couldn't get valid integers, skip this iteration
+                        is_moving = False
+                        new_PacMan_Pos = []
+                        continue
                     
                     # Nếu timer lớn hơn SIZE_WALL thì PacMan sẽ dừng lại và cập nhật vị trí mới
                     # Nếu PacMan chạm vào tường thì sẽ dừng lại và cập nhật vị trí mới
@@ -299,7 +333,9 @@ def startGame() -> None:
                 search = SearchAgent(_map, _food_Position, row, col, N, M) # Khởi tạo thuật toán tìm kiếm
                 if Level == 1 or Level == 2: # Level 1, 2: tìm kiếm theo chiều rộng (BFS) hoặc chiều sâu (DFS)
                     if len(result) <= 0:     # Nếu chưa tìm thấy đường đi thì tìm kiếm lại
-                        result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL1"])
+                        result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM[f"LEVEL{Level}"])
+                        if result is None:  # Nếu thuật toán không trả về kết quả, gán result là danh sách rỗng
+                            result = []
                         if len(result) > 0: # Nếu tìm thấy đường đi thì lấy vị trí đầu tiên
                             result.pop(0)   # Bỏ qua vị trí đầu tiên vì đó là vị trí hiện tại của PacMan
                             new_PacMan_Pos = result[0] # Lấy vị trí tiếp theo để di chuyển
@@ -309,20 +345,44 @@ def startGame() -> None:
                         new_PacMan_Pos = result[0]
 
                 elif Level == 3 and len(_food_Position) > 0: 
-                    new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"], visited=_visited) # Tìm kiếm theo chiều rộng (BFS) hoặc chiều sâu (DFS)
-                    _visited[row][col] += 1 # Cập nhật số lần PacMan đi qua ô này
+                    # Sử dụng thuật toán người dùng chọn thay vì mặc định
+                    if LEVEL_TO_ALGORITHM["LEVEL3"] == "BFS" or LEVEL_TO_ALGORITHM["LEVEL3"] == "DFS" or LEVEL_TO_ALGORITHM["LEVEL3"] == "A*" or LEVEL_TO_ALGORITHM["LEVEL3"] == "UCS" or LEVEL_TO_ALGORITHM["LEVEL3"] == "Greedy" or LEVEL_TO_ALGORITHM["LEVEL3"] == "Beam Search" or LEVEL_TO_ALGORITHM["LEVEL3"] == "IDA*":
+                        if len(result) <= 0:
+                            result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"])
+                            if result is None:
+                                result = []
+                            if len(result) > 0:
+                                result.pop(0)
+                                new_PacMan_Pos = result[0]
+                        elif len(result) > 1:
+                            result.pop(0)
+                            new_PacMan_Pos = result[0]
+                    else:
+                        # Nếu là Local Search hoặc thuật toán khác thì dùng cách cũ
+                        new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"], visited=_visited)
+                        _visited[row][col] += 1 # Cập nhật số lần PacMan đi qua ô này
 
                 elif Level == 4 and len(_food_Position) > 0:
                     new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL4"], depth=4, Score=Score)
 
-                if len(_food_Position) > 0 and (len(new_PacMan_Pos) == 0 or [row, col] == new_PacMan_Pos): # Nếu không tìm thấy đường đi thì di chuyển ngẫu nhiên
+                if len(_food_Position) > 0 and (not isinstance(new_PacMan_Pos, list) or len(new_PacMan_Pos) == 0 or [row, col] == new_PacMan_Pos): # Nếu không tìm thấy đường đi thì di chuyển ngẫu nhiên
                     new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
                 if len(new_PacMan_Pos) > 0: # Nếu tìm thấy đường đi thì di chuyển
-                    change_direction_PacMan(new_PacMan_Pos[0], new_PacMan_Pos[1]) # Change direction PacMan là hàm thay đổi hướng di chuyển của PacMan, new_PacMan_Pos[0] là hàng, new_PacMan_Pos[1] là cột
-                    if check_collision_ghost(_ghost, new_PacMan_Pos[0], new_PacMan_Pos[1]):
-                        pac_can_move = False
-                        done = True
-                        status = -1
+                    # Check if new_PacMan_Pos[0] is a list or an integer
+                    if isinstance(new_PacMan_Pos[0], list):
+                        # If it's a list, extract the row and column
+                        change_direction_PacMan(new_PacMan_Pos[0][0], new_PacMan_Pos[0][1])
+                        if check_collision_ghost(_ghost, new_PacMan_Pos[0][0], new_PacMan_Pos[0][1]):
+                            pac_can_move = False
+                            done = True
+                            status = -1
+                    else:
+                        # If it's already integers, proceed as normal
+                        change_direction_PacMan(new_PacMan_Pos[0], new_PacMan_Pos[1])
+                        if check_collision_ghost(_ghost, new_PacMan_Pos[0], new_PacMan_Pos[1]):
+                            pac_can_move = False
+                            done = True
+                            status = -1
 
         # ------------------------------------------------------
 

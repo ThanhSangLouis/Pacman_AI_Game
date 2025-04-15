@@ -5,6 +5,8 @@ import sys
 
 from constants import FPS, WIDTH, HEIGHT, BLUE, BLACK, WALL, FOOD, WHITE, YELLOW, MONSTER, IMAGE_GHOST, \
     IMAGE_PACMAN
+from constants import LEVEL_TO_ALGORITHM
+
 
 clock = pygame.time.Clock()
 bg = pygame.image.load("images/home_bg.png")
@@ -18,6 +20,7 @@ __map = 0
 SIZE_WALL = 20
 
 
+
 class Button:
     def __init__(self, x, y, width, height, screen, buttonText="Button", onClickFunction=None):
         self.x = x
@@ -26,6 +29,7 @@ class Button:
         self.height = height
         self.onClickFunction = onClickFunction
         self.screen = screen
+        self.wasClicked = False  # Track if button was already clicked
 
         self.fillColors = {
             'normal': '#FF4500',
@@ -35,17 +39,23 @@ class Button:
 
         self.buttonSurface = pygame.Surface((self.width, self.height))
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
-
         self.buttonSurf = font.render(buttonText, True, (255, 255, 255))
 
     def process(self):
         mousePos = pygame.mouse.get_pos()
         self.buttonSurface.fill(self.fillColors['normal'])
+        
         if self.buttonRect.collidepoint(mousePos):
             self.buttonSurface.fill(self.fillColors['hover'])
-            if pygame.mouse.get_pressed()[0]:
+            # Check if the mouse is clicked and the button hasn't been clicked yet
+            if pygame.mouse.get_pressed()[0] and not self.wasClicked:
                 self.buttonSurface.fill(self.fillColors['pressed'])
-                self.onClickFunction()
+                self.wasClicked = True
+                if self.onClickFunction:
+                    self.onClickFunction()
+            # Reset wasClicked when mouse button is released
+            elif not pygame.mouse.get_pressed()[0]:
+                self.wasClicked = False
 
         self.buttonSurface.blit(self.buttonSurf, [
             self.buttonRect.width / 2 - self.buttonSurf.get_rect().width / 2,
@@ -53,7 +63,6 @@ class Button:
         ])
         pygame.draw.rect(self.buttonSurface, BLUE, (0, 0, self.width, self.height), 5)
         self.screen.blit(self.buttonSurface, self.buttonRect)
-
 
 class Menu:
     def __init__(self, screen):
@@ -80,6 +89,37 @@ class Menu:
         self.btnPlay = Button(WIDTH // 2 - 75, HEIGHT // 4 * 3 + 35, 150, 100, screen, "PLAY", self.selectMap)
 
         self.btnBack = Button(40, HEIGHT // 4 * 3 + 35, 150, 100, screen, "BACK", self.myFunction)
+        self.selected_algorithm = None
+        self.algorithm_buttons = []
+
+    def load_algorithm_buttons(self):
+        self.algorithm_buttons = []
+        options = []
+        if self.current_level == 1:
+            options = ["Steepest-Ascent hill climbing", "Stochastic hill Climbing", "DFS", "BFS", "Local Search"]
+        elif self.current_level == 2:
+            options = ["BFS", "DFS", "Beam Search", "Greedy"]
+        elif self.current_level == 3:
+            options = ["UCS", "BFS", "A* Search", "Minimax"]
+        elif self.current_level == 4:
+            options = ["IDA* Search", "A* Search", "Minimax", "Expectimax", "AlphaBetaPruning"]
+
+        for idx, algo in enumerate(options):
+            btn = Button(
+                WIDTH // 2 - 150, 100 + idx * 80, 300, 60, self.screen,
+                algo, lambda a=algo: self.select_algorithm(a)
+            )
+            self.algorithm_buttons.append(btn)
+
+    def select_algorithm(self, algo_name):
+        if self.clicked:
+            self.selected_algorithm = algo_name
+            LEVEL_TO_ALGORITHM[f"LEVEL{self.current_level}"] = algo_name
+            self.current_screen = 3  # chuyển đến màn chọn map
+            # Reset map viewing
+            self.current_map = 0
+            self.draw_map(self.map_name[self.current_map])
+        self.clicked = False
 
     def nextMap(self):
         if self.clicked:
@@ -106,32 +146,44 @@ class Menu:
             self.current_level = 1
             for file in os.listdir('../Input/Level1'):
                 self.map_name.append('../Input/Level1/' + file)
-            self.current_screen = 3
+            self.current_screen = 5  # CHUYỂN SANG CHỌN THUẬT TOÁN
+            self.load_algorithm_buttons()
         self.clicked = False
 
+
+    # Level 2
     def _load_map_level_2(self):
         if self.clicked:
             self.current_level = 2
+            self.map_name = []  # Reset map_name to avoid duplicates
             for file in os.listdir('../Input/Level2'):
                 self.map_name.append('../Input/Level2/' + file)
-            self.current_screen = 3
+            self.current_screen = 5  # Ensure we set to screen 5 for algorithm selection
+            self.load_algorithm_buttons()
         self.clicked = False
 
+    # Level 3
     def _load_map_level_3(self):
         if self.clicked:
             self.current_level = 3
+            self.map_name = []  # Reset map_name to avoid duplicates
             for file in os.listdir('../Input/Level3'):
                 self.map_name.append('../Input/Level3/' + file)
-            self.current_screen = 3
+            self.current_screen = 5  # Ensure we set to screen 5 for algorithm selection
+            self.load_algorithm_buttons()
         self.clicked = False
 
+
+    # Level 4
     def _load_map_level_4(self):
         if self.clicked:
             self.current_level = 4
             for file in os.listdir('../Input/Level4'):
                 self.map_name.append('../Input/Level4/' + file)
-            self.current_screen = 3
+            self.current_screen = 5  # CHUYỂN SANG CHỌN THUẬT TOÁN
+            self.load_algorithm_buttons()
         self.clicked = False
+
 
     def draw_map(self, fileName):
         text_surface = my_font.render(
@@ -219,6 +271,10 @@ class Menu:
                 self.btnPrev.process()
                 self.btnPlay.process()
                 self.btnBack.process()
+            elif self.current_screen == 5:
+                self.screen.fill(BLACK)
+                for btn in self.algorithm_buttons:
+                    btn.process()
 
             pygame.display.flip()
             clock.tick(FPS)
