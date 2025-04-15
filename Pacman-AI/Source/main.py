@@ -346,7 +346,7 @@ def startGame() -> None:
 
                 elif Level == 3 and len(_food_Position) > 0: 
                     # Sử dụng thuật toán người dùng chọn thay vì mặc định
-                    if LEVEL_TO_ALGORITHM["LEVEL3"] == "BFS" or LEVEL_TO_ALGORITHM["LEVEL3"] == "DFS" or LEVEL_TO_ALGORITHM["LEVEL3"] == "A*" or LEVEL_TO_ALGORITHM["LEVEL3"] == "UCS" or LEVEL_TO_ALGORITHM["LEVEL3"] == "Greedy" or LEVEL_TO_ALGORITHM["LEVEL3"] == "Beam Search" or LEVEL_TO_ALGORITHM["LEVEL3"] == "IDA*":
+                    if LEVEL_TO_ALGORITHM["LEVEL3"] in ["BFS", "DFS", "A*", "UCS", "Greedy", "Beam Search", "IDA*", "IDS"]:
                         if len(result) <= 0:
                             result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"])
                             if result is None:

@@ -98,9 +98,9 @@ class Menu:
         if self.current_level == 1:
             options = ["Steepest-Ascent hill climbing", "Stochastic hill Climbing", "DFS", "BFS", "Local Search"]
         elif self.current_level == 2:
-            options = ["BFS", "DFS", "Beam Search", "Greedy"]
+            options = ["BFS", "DFS", "Beam Search", "Greedy", "IDS"]
         elif self.current_level == 3:
-            options = ["UCS", "BFS", "A* Search", "Minimax"]
+            options = ["UCS", "BFS", "A* Search", "Minimax", "IDS"]
         elif self.current_level == 4:
             options = ["IDA* Search", "A* Search", "Minimax", "Expectimax", "AlphaBetaPruning"]
 
@@ -114,7 +114,30 @@ class Menu:
     def select_algorithm(self, algo_name):
         if self.clicked:
             self.selected_algorithm = algo_name
-            LEVEL_TO_ALGORITHM[f"LEVEL{self.current_level}"] = algo_name
+            
+            # Map friendly algorithm names to the exact names expected by SearchAgent
+            algorithm_mapping = {
+                "BFS": "BFS",
+                "DFS": "DFS",
+                "A* Search": "A*",
+                "Local Search": "Local Search",
+                "Minimax": "Minimax",
+                "AlphaBetaPruning": "AlphaBetaPruning",
+                "Expectimax": "Expect",
+                "Steepest-Ascent hill climbing": "Hill Steepest",
+                "Stochastic hill Climbing": "Hill Random",
+                "Beam Search": "Beam Search",
+                "Greedy": "Greedy",
+                "UCS": "UCS",
+                "IDA* Search": "IDA*"
+            }
+            
+            # Use the mapped algorithm name
+            if algo_name in algorithm_mapping:
+                LEVEL_TO_ALGORITHM[f"LEVEL{self.current_level}"] = algorithm_mapping[algo_name]
+            else:
+                LEVEL_TO_ALGORITHM[f"LEVEL{self.current_level}"] = algo_name
+                
             self.current_screen = 3  # chuyển đến màn chọn map
             # Reset map viewing
             self.current_map = 0
