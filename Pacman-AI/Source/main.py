@@ -346,21 +346,31 @@ def startGame() -> None:
 
                 elif Level == 3 and len(_food_Position) > 0: 
                     # Sử dụng thuật toán người dùng chọn thay vì mặc định
-                    if LEVEL_TO_ALGORITHM["LEVEL3"] in ["BFS", "DFS", "A*", "UCS", "Greedy", "Beam Search", "IDA*", "IDS"]:
+                    if LEVEL_TO_ALGORITHM["LEVEL3"] in ["BFS", "DFS", "A*", "UCS", "Greedy", "Beam Search", "IDA*", "IDS", "AlphaBeta"]:
                         if len(result) <= 0:
                             result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"])
                             if result is None:
                                 result = []
-                            if len(result) > 0:
+                                new_PacMan_Pos = []
+                            elif len(result) > 1:
                                 result.pop(0)
                                 new_PacMan_Pos = result[0]
+                            else:
+                                result = []
+                                new_PacMan_Pos = []
+
                         elif len(result) > 1:
                             result.pop(0)
                             new_PacMan_Pos = result[0]
+                        else:  # Dù là 1 phần tử cũng không đủ đi tiếp → reset
+                            result = []
+                            new_PacMan_Pos = []
+
                     else:
                         # Nếu là Local Search hoặc thuật toán khác thì dùng cách cũ
                         new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"], visited=_visited)
-                        _visited[row][col] += 1 # Cập nhật số lần PacMan đi qua ô này
+                        _visited[row][col] += 1  # Cập nhật số lần PacMan đi qua ô này
+
 
                 elif Level == 4 and len(_food_Position) > 0:
                     new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL4"], depth=4, Score=Score)

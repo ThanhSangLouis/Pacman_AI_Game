@@ -11,6 +11,7 @@ from Algorithms.BeamSearch import BeamSearch
 from Algorithms.UCS import UCS
 from Algorithms.IDASearch import IDAStar
 from Algorithms.IDS import IDS
+from Algorithms.AlphaBetaPruning import AlphaBetaPruning
 
 class SearchAgent:
     def __init__(self, _map, _food_Position, start_row, start_col, N, M):
@@ -34,6 +35,8 @@ class SearchAgent:
             return minimaxAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
         if ALGORITHMS == "AlphaBetaPruning":
             return AlphaBetaAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
+        if ALGORITHMS == "AlphaBeta":
+            return AlphaBetaPruning(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "Expect":
             return ExpectAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
         if ALGORITHMS == "Hill Simple":

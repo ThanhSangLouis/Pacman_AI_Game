@@ -29,3 +29,10 @@ def find_nearest_food(_food_Position: list[list[int]], start_row: int, start_col
             _id = idx
             [food_row, food_col] = _food_Position[idx] # Cập nhật vị trí với thức ăn gần hơn
     return [food_row, food_col, _id]
+
+def randomPacManNewPos(_map, row, col, _N, _M):
+    for [d_r, d_c] in DDX:
+        new_r, new_c = row + d_r, col + d_c
+        if isValid2(_map, new_r, new_c, _N, _M):
+            return [new_r, new_c]
+    return [row, col]

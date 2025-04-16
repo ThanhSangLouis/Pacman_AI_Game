@@ -100,7 +100,7 @@ class Menu:
         elif self.current_level == 2:
             options = ["BFS", "DFS", "Beam Search", "Greedy", "IDS"]
         elif self.current_level == 3:
-            options = ["UCS", "BFS", "A* Search", "Minimax", "IDS"]
+            options = ["UCS", "BFS", "A* Search", "Minimax", "IDS","AlphaBetaPruning"]
         elif self.current_level == 4:
             options = ["IDA* Search", "A* Search", "Minimax", "Expectimax", "AlphaBetaPruning"]
 
