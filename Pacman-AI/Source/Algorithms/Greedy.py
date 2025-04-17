@@ -1,40 +1,46 @@
 
-from Utils.utils import DDX, isValid, Manhattan
-from collections import deque
+from queue import PriorityQueue
+from Utils.utils import isValid, DDX, Manhattan
 
 def Greedy(_map, food_pos, row, col, N, M):
-    if not food_pos or len(food_pos) == 0:
+    if not food_pos:
         return []
 
-    goal = food_pos[0]
+    # Tìm mục tiêu gần nhất dựa trên khoảng cách Manhattan
+    min_h = float('inf')
+    goal = None
+    for food in food_pos:
+        h = Manhattan(row, col, food[0], food[1])
+        if h < min_h:
+            min_h = h
+            goal = food
+
+    if not goal:
+        return []
+
     visited = [[False for _ in range(M)] for _ in range(N)]
-    trace = [[[-1, -1] for _ in range(M)] for _ in range(N)]
-    queue = deque()
-    queue.append((row, col))
+    trace = {}
+
+    q = PriorityQueue()
+    q.put((Manhattan(row, col, goal[0], goal[1]), (row, col)))
     visited[row][col] = True
 
-    while queue:
-        current = queue.popleft()
-        if list(current) == goal or _map[current[0]][current[1]] == 2:
-            # Truy vết đường đi
-            path = [[current[0], current[1]]]
-            r, c = current
-            while trace[r][c] != [-1, -1]:
-                r, c = trace[r][c]
+    while not q.empty():
+        _, (r, c) = q.get()
+
+        if [r, c] == goal:
+            path = [[r, c]]
+            while (r, c) != (row, col):
+                r, c = trace[(r, c)]
                 path.insert(0, [r, c])
             return path
 
-        neighbors = []
         for d_r, d_c in DDX:
-            new_r, new_c = current[0] + d_r, current[1] + d_c
+            new_r, new_c = r + d_r, c + d_c
             if isValid(_map, new_r, new_c, N, M) and not visited[new_r][new_c]:
+                visited[new_r][new_c] = True
+                trace[(new_r, new_c)] = (r, c)
                 h = Manhattan(new_r, new_c, goal[0], goal[1])
-                neighbors.append((h, new_r, new_c))
+                q.put((h, (new_r, new_c)))
 
-        neighbors.sort()
-        for _, new_r, new_c in neighbors:
-            visited[new_r][new_c] = True
-            trace[new_r][new_c] = [current[0], current[1]]
-            queue.append((new_r, new_c))
-
-    return []
+    return []  # không tìm thấy đường
