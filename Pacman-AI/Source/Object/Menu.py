@@ -96,11 +96,11 @@ class Menu:
         self.algorithm_buttons = []
         options = []
         if self.current_level == 1:
-            options = ["Steepest-Ascent hill climbing", "Stochastic hill Climbing", "DFS", "BFS", "Local Search"]
+            options = ["UCS", "Stochastic hill Climbing", "DFS", "BFS", "Local Search"]
         elif self.current_level == 2:
             options = ["BFS", "DFS", "Beam Search", "Greedy", "IDS"]
         elif self.current_level == 3:
-            options = ["UCS", "BFS", "A* Search", "Minimax", "IDS","AlphaBetaPruning"]
+            options = ["UCS", "BFS", "A* Search", "Minimax","AlphaBetaPruning","Local Search"]
         elif self.current_level == 4:
             options = ["IDA* Search", "A* Search", "Minimax", "Expectimax", "AlphaBetaPruning"]
 

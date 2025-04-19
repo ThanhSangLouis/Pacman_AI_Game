@@ -11,7 +11,7 @@ from Algorithms.BeamSearch import BeamSearch
 from Algorithms.UCS import UCS
 from Algorithms.IDASearch import IDAStar
 from Algorithms.IDS import IDS
-from Algorithms.AlphaBetaPruning import AlphaBetaPruning
+from Algorithms.AlphaBetaPruning import AlphaBetaAgent as AlphaBetaPruning
 
 class SearchAgent:
     def __init__(self, _map, _food_Position, start_row, start_col, N, M):
