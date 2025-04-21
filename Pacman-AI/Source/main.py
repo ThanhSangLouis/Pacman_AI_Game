@@ -100,6 +100,10 @@ def initData() -> None:
 
 
 def Draw(_screen) -> None:
+    for row in range(N):
+        for col in range(M):
+            pygame.draw.rect(_screen, (28, 28, 28),  # Màu xám nhạt cho ô trống
+                                 (MARGIN["LEFT"] + col * SIZE_WALL, MARGIN["TOP"] + row * SIZE_WALL, SIZE_WALL, SIZE_WALL))
     for wall in _wall:
         wall.draw(_screen)
     for road in _road:
@@ -395,10 +399,10 @@ def startGame() -> None:
 
         # ------------------------------------------------------
 
-        screen.fill(BLACK)
+        screen.fill((95, 158, 160))
         Draw(screen)
         pygame.display.flip()
-        clock.tick(FPS)
+        clock.tick(FPS) 
 
     handleEndGame(status)
 

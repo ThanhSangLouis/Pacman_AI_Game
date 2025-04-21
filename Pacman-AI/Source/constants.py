@@ -16,6 +16,8 @@ RED = (255, 0, 0)
 PURPLE = (255, 0, 255)
 YELLOW = (255, 255, 0)
 ORANGE = (255, 165, 0)
+PINK = (255, 192, 203)
+BLUE_FOOD = (50, 130, 255)  # màu xanh cho food thường
 
 # DEFINE MAP
 SIZE_WALL: int = 30
