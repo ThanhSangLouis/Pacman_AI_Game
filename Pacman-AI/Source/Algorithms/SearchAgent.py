@@ -10,9 +10,8 @@ from Algorithms.Greedy import Greedy
 from Algorithms.BeamSearch import BeamSearch
 from Algorithms.UCS import UCS
 from Algorithms.IDASearch import IDAStar
-from Algorithms.IDS import IDS
 from Algorithms.AlphaBetaPruning import AlphaBetaAgent as AlphaBetaPruning
-
+from Algorithms.ReflexAgentWithAStar import ReflexAgentWithAStar
 class SearchAgent:
     def __init__(self, _map, _food_Position, start_row, start_col, N, M):
         self.map = _map.copy()
@@ -53,5 +52,5 @@ class SearchAgent:
             return UCS(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "IDA*":
             return IDAStar(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
-        if ALGORITHMS == "IDS":
-            return IDS(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "ReflexAgentWithAStar":
+            return ReflexAgentWithAStar(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)

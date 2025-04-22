@@ -100,13 +100,19 @@ class Menu:
         elif self.current_level == 2:
             options = ["BFS", "DFS", "Beam Search", "Greedy", "IDS"]
         elif self.current_level == 3:
-            options = ["UCS", "BFS", "A* Search", "Minimax","AlphaBetaPruning","Local Search"]
+            options = ["UCS", "BFS", "A* Search", "Minimax", "AlphaBetaPruning", "Local Search", "ReflexAgentWithAStar"]
         elif self.current_level == 4:
             options = ["IDA* Search", "A* Search", "Minimax", "Expectimax", "AlphaBetaPruning"]
 
+        start_y = 80
+        space_y = 70  # khoảng cách dọc đều hơn
+        total_height = len(options) * space_y
+
+        first_button_y = (HEIGHT - total_height) // 2  # căn giữa theo chiều cao
+
         for idx, algo in enumerate(options):
             btn = Button(
-                WIDTH // 2 - 150, 100 + idx * 80, 300, 60, self.screen,
+                WIDTH // 2 - 150, first_button_y + idx * space_y, 300, 60, self.screen,
                 algo, lambda a=algo: self.select_algorithm(a)
             )
             self.algorithm_buttons.append(btn)
@@ -123,13 +129,14 @@ class Menu:
                 "Local Search": "Local Search",
                 "Minimax": "Minimax",
                 "AlphaBetaPruning": "AlphaBetaPruning",
-                "Expectimax": "Expect",
+                "Expectimax": "Expectimax",
                 "Steepest-Ascent hill climbing": "Hill Steepest",
                 "Stochastic hill Climbing": "Hill Random",
                 "Beam Search": "Beam Search",
                 "Greedy": "Greedy",
                 "UCS": "UCS",
-                "IDA* Search": "IDA*"
+                "IDA* Search": "IDA*",
+                "ReflexAgentWithAStar": "ReflexAgentWithAStar",
             }
             
             # Use the mapped algorithm name

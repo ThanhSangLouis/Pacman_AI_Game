@@ -41,7 +41,3 @@ def AStar(_map, _food_Position, start_row, start_col, N, M):
                 trace[group] = current
 
     return path
-
-# HillCimbing(simple, steepest, ngẫu nhiên): LV1
-# Greedy, UCS: LV2
-# IDA* : LV3

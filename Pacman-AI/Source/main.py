@@ -237,68 +237,41 @@ def startGame() -> None:
                 # Pacman move
                 if len(new_PacMan_Pos) > 0:
                     [old_row_Pac, old_col_Pac] = PacMan.getRC()
-                    
-                    # Fix for the "too many values to unpack" error
-                    # Ensure we only take the first two elements from new_PacMan_Pos
-                    if isinstance(new_PacMan_Pos, list):
-                        if len(new_PacMan_Pos) >= 2:
-                            # If new_PacMan_Pos is longer than 2 items, take only the first two
-                            new_row_Pac, new_col_Pac = new_PacMan_Pos[0], new_PacMan_Pos[1]
-                        else:
-                            # Handle case where new_PacMan_Pos is a list with nested lists
-                            if isinstance(new_PacMan_Pos[0], list) and len(new_PacMan_Pos[0]) >= 2:
-                                new_row_Pac, new_col_Pac = new_PacMan_Pos[0][0], new_PacMan_Pos[0][1]
-                            else:
-                                # Skip this iteration if format is unexpected
-                                is_moving = False
-                                continue
-                    else:
-                        # If it's not a list, skip this iteration
-                        is_moving = False
-                        continue
 
-                    # After extracting the values, make sure they are integers
-                    if isinstance(new_row_Pac, list):
-                        # Handle nested lists - extract the values properly
-                        if len(new_row_Pac) > 1:
-                            new_col_Pac = new_row_Pac[1]
-                            new_row_Pac = new_row_Pac[0]
-                        else:
-                            new_row_Pac = new_row_Pac[0]
-                    
-                    # Now that we have integers, compare and move
-                    if isinstance(new_row_Pac, int) and isinstance(new_col_Pac, int):
-                        if old_row_Pac < new_row_Pac:
-                            PacMan.move(1, 0) # di chuyển xuống dưới
-                        elif old_row_Pac > new_row_Pac:
-                            PacMan.move(-1, 0) # di chuyển lên trên
-                        elif old_col_Pac < new_col_Pac:
-                            PacMan.move(0, 1) # di chuyển sang phải
-                        elif old_col_Pac > new_col_Pac:
-                            PacMan.move(0, -1) # di chuyển sang trái
-                    else:
-                        # If we couldn't get valid integers, skip this iteration
-                        is_moving = False
-                        new_PacMan_Pos = []
-                        continue
-                    
-                    # Nếu timer lớn hơn SIZE_WALL thì PacMan sẽ dừng lại và cập nhật vị trí mới
-                    # Nếu PacMan chạm vào tường thì sẽ dừng lại và cập nhật vị trí mới
-                    if timer >= SIZE_WALL or PacMan.touch_New_RC(new_row_Pac, new_col_Pac):
-                        is_moving = False
-                        PacMan.setRC(new_row_Pac, new_col_Pac)
-                        Score -= 1
+                # 🚀 Gán đúng new_row_Pac và new_col_Pac
+                if isinstance(new_PacMan_Pos[0], list):
+                    # Nếu new_PacMan_Pos là [[row, col]]
+                    new_row_Pac, new_col_Pac = new_PacMan_Pos[0]
+                else:
+                    # Nếu new_PacMan_Pos là [row, col]
+                    new_row_Pac, new_col_Pac = new_PacMan_Pos
 
-                        # check touch Food
-                        for idx in range(len(_food)):
-                            [row_food, col_food] = _food[idx].getRC()
-                            if row_food == new_row_Pac and col_food == new_col_Pac:
-                                _map[row_food][col_food] = EMPTY
-                                _food.pop(idx) # Xóa thức ăn khỏi danh sách thức ăn
-                                _food_Position.pop(idx) # Xóa thức ăn khỏi danh sách vị trí thức ăn
-                                Score += 20
-                                break # Thoát khỏi vòng lặp nếu đã tìm thấy thức ăn
-                        new_PacMan_Pos = []
+                # ✅ Sau khi có new_row_Pac, new_col_Pac rồi mới move
+                if old_row_Pac < new_row_Pac:
+                    PacMan.move(1, 0)
+                elif old_row_Pac > new_row_Pac:
+                    PacMan.move(-1, 0)
+                elif old_col_Pac < new_col_Pac:
+                    PacMan.move(0, 1)
+                elif old_col_Pac > new_col_Pac:
+                    PacMan.move(0, -1)
+
+                if timer >= SIZE_WALL or PacMan.touch_New_RC(new_row_Pac, new_col_Pac):
+                    is_moving = False
+                    PacMan.setRC(new_row_Pac, new_col_Pac)
+                    Score -= 1
+
+                    # Ăn food
+                    for idx in range(len(_food)):
+                        [row_food, col_food] = _food[idx].getRC()
+                        if row_food == new_row_Pac and col_food == new_col_Pac:
+                            _map[row_food][col_food] = EMPTY
+                            _food.pop(idx)
+                            _food_Position.pop(idx)
+                            Score += 20
+                            break
+                    new_PacMan_Pos = []
+
 
                 if check_collision_ghost(_ghost): # Nếu PacMan chạm vào ma thì dừng lại và cập nhật vị trí mới
                     pac_can_move = False
@@ -349,7 +322,7 @@ def startGame() -> None:
 
                 elif Level == 3 and len(_food_Position) > 0: 
                     # Sử dụng thuật toán người dùng chọn thay vì mặc định
-                    if LEVEL_TO_ALGORITHM["LEVEL3"] in ["BFS", "DFS", "A*", "UCS", "Greedy", "Beam Search", "IDA*", "IDS", "AlphaBeta"]:
+                    if LEVEL_TO_ALGORITHM["LEVEL3"] in ["BFS", "DFS", "A*", "UCS", "Greedy", "Beam Search", "IDA*", "IDS", "AlphaBeta", "ReflexAgentWithAStar"]:
                         if len(result) <= 0:
                             result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"])
                             if result is None:
