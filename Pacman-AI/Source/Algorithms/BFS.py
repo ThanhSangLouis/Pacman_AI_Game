@@ -5,10 +5,7 @@ def BFS(_map, _food_Position, start_row, start_col, N, M):
     visited = [[False for _ in range(M)] for _ in range(N)]
     trace = [[[-1, -1] for _ in range(M)] for _ in range(N)]
 
-    [food_row, food_col, _id] = find_nearest_food(_food_Position, start_row, start_col)
-
-    if _id == -1:
-        return []
+    [food_row, food_col] = find_nearest_food(_food_Position, start_row, start_col)
 
     lt = []
     chk = False

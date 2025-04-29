@@ -180,6 +180,7 @@ def randomPacManNewPos(_map, row, col, _N, _M):
 
 def startGame() -> None: 
     global _map, _visited, Score # visited: lưu số lần Pac-Man đi qua mỗi ô (dùng trong Local Search)
+    prev_pos = None
     _ghost_new_position = []
     result = []
     new_PacMan_Pos: list = []
@@ -307,49 +308,80 @@ def startGame() -> None:
                 # thuật toán sẽ được cài đặt trong folder Algorithms
 
                 search = SearchAgent(_map, _food_Position, row, col, N, M) # Khởi tạo thuật toán tìm kiếm
-                if Level == 1 or Level == 2: # Level 1, 2: tìm kiếm theo chiều rộng (BFS) hoặc chiều sâu (DFS)
-                    if len(result) <= 0:     # Nếu chưa tìm thấy đường đi thì tìm kiếm lại
-                        result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM[f"LEVEL{Level}"])
-                        if result is None:  # Nếu thuật toán không trả về kết quả, gán result là danh sách rỗng
-                            result = []
-                        if len(result) > 0: # Nếu tìm thấy đường đi thì lấy vị trí đầu tiên
-                            result.pop(0)   # Bỏ qua vị trí đầu tiên vì đó là vị trí hiện tại của PacMan
-                            new_PacMan_Pos = result[0] # Lấy vị trí tiếp theo để di chuyển
+                if (Level == 1 or Level == 2) and len(_food_Position) > 0:
+                    algorithm = LEVEL_TO_ALGORITHM[f"LEVEL{Level}"]
 
-                    elif len(result) > 1: # Nếu đã tìm thấy đường đi thì lấy vị trí tiếp theo
-                        result.pop(0)
-                        new_PacMan_Pos = result[0]
+                    if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]:
+                        if len(result) == 0:
+                            # Nếu đã đi hết đường cũ → mới tìm đường mới
+                            result = search.execute(ALGORITHMS=algorithm)
+                            if result is None:
+                                result = []
+                            if len(result) > 0:
+                                result.pop(0)  # Bỏ vị trí Pacman hiện tại
+                        if len(result) > 0:
+                            new_PacMan_Pos = result.pop(0)
+                        else:
+                            new_PacMan_Pos = []
 
-                elif Level == 3 and len(_food_Position) > 0: 
-                    # Sử dụng thuật toán người dùng chọn thay vì mặc định
-                    if LEVEL_TO_ALGORITHM["LEVEL3"] in ["BFS", "DFS", "A*", "UCS", "Greedy", "Beam Search", "IDA*", "IDS", "AlphaBeta", "ReflexAgentWithAStar"]:
+                    else:
+                        new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
+
+                    if len(_food_Position) > 0 and (not isinstance(new_PacMan_Pos, list) or len(new_PacMan_Pos) == 0 or [row, col] == new_PacMan_Pos):
+                        new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
+
+
+                # Đây là xử lý PacMan cho Level 3
+                if Level == 3 and len(_food_Position) > 0:
+                    algorithm = LEVEL_TO_ALGORITHM["LEVEL3"]
+
+                    if algorithm == "SimulatedAnnealing":
+                        move = search.execute(ALGORITHMS=algorithm)
+                        if move:
+                            new_PacMan_Pos = move[0]
+                        else:
+                            new_PacMan_Pos = []
+
+                    elif algorithm == "Local Search":
+                        new_PacMan_Pos = search.execute(ALGORITHMS=algorithm, visited=_visited)
+                        _visited[row][col] += 1
+
+                    elif algorithm in ["Minimax", "AlphaBetaPruning", "Expectimax"]:
+                        new_PacMan_Pos = search.execute(ALGORITHMS=algorithm, depth=4, Score=Score)
+
+                    elif algorithm == "ReflexAgentWithAStar":
                         if len(result) <= 0:
                             result = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"])
                             if result is None:
                                 result = []
                                 new_PacMan_Pos = []
-                            elif len(result) > 1:
-                                result.pop(0)
+                            elif len(result) > 0:
                                 new_PacMan_Pos = result[0]
                             else:
                                 result = []
                                 new_PacMan_Pos = []
+                        elif len(result) > 0:
+                            new_PacMan_Pos = result.pop(0)
 
-                        elif len(result) > 1:
-                            result.pop(0)
-                            new_PacMan_Pos = result[0]
-                        else:  # Dù là 1 phần tử cũng không đủ đi tiếp → reset
-                            result = []
-                            new_PacMan_Pos = []
-
-                    else:
-                        # Nếu là Local Search hoặc thuật toán khác thì dùng cách cũ
-                        new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL3"], visited=_visited)
-                        _visited[row][col] += 1  # Cập nhật số lần PacMan đi qua ô này
-
+                    # Nếu vẫn không tìm ra bước đi
+                    if len(_food_Position) > 0 and (not isinstance(new_PacMan_Pos, list) or len(new_PacMan_Pos) == 0 or [row, col] == new_PacMan_Pos):
+                        new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M) # Nếu PacMan chạm vào ma thì dừng lại và cập nhật vị trí mới
 
                 elif Level == 4 and len(_food_Position) > 0:
-                    new_PacMan_Pos = search.execute(ALGORITHMS=LEVEL_TO_ALGORITHM["LEVEL4"], depth=4, Score=Score)
+                    algorithm = LEVEL_TO_ALGORITHM["LEVEL4"]
+
+                    if algorithm == "SimulatedAnnealing":
+                        move = search.execute(ALGORITHMS=algorithm)
+                        if move:
+                            new_PacMan_Pos = move[0]
+                        else:
+                            new_PacMan_Pos = []
+                    elif algorithm in ["Minimax", "AlphaBetaPruning", "Expectimax"]:
+                        new_PacMan_Pos = search.execute(ALGORITHMS=algorithm, depth=4, Score=Score)
+                    else:
+                        # fallback cho trường hợp thuật toán không khớp
+                        new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
+
 
                 if len(_food_Position) > 0 and (not isinstance(new_PacMan_Pos, list) or len(new_PacMan_Pos) == 0 or [row, col] == new_PacMan_Pos): # Nếu không tìm thấy đường đi thì di chuyển ngẫu nhiên
                     new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)

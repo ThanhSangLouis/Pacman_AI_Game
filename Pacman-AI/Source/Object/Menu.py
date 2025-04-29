@@ -96,13 +96,13 @@ class Menu:
         self.algorithm_buttons = []
         options = []
         if self.current_level == 1:
-            options = ["UCS", "Stochastic hill Climbing", "DFS", "BFS", "Local Search"]
+            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]
         elif self.current_level == 2:
-            options = ["BFS", "DFS", "Beam Search", "Greedy", "IDS"]
+            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]
         elif self.current_level == 3:
-            options = ["UCS", "BFS", "A* Search", "Minimax", "AlphaBetaPruning", "Local Search", "ReflexAgentWithAStar"]
+            options = ["Minimax", "AlphaBetaPruning", "Local Search", "ReflexAgentWithAStar", "SimulatedAnnealing"]
         elif self.current_level == 4:
-            options = ["IDA* Search", "A* Search", "Minimax", "Expectimax", "AlphaBetaPruning"]
+            options = ["SimulatedAnnealing", "Minimax", "Expectimax", "AlphaBetaPruning"]
 
         start_y = 80
         space_y = 70  # khoảng cách dọc đều hơn

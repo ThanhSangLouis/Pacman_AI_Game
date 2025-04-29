@@ -3,7 +3,7 @@ ALGORITHM: str = "MINIMAX"
 LEVEL_TO_ALGORITHM = {
     "LEVEL1": "BFS",
     "LEVEL2": "BFS",
-    "LEVEL3": "LocalSearch",
+    "LEVEL3": "Local Search",
     "LEVEL4": "Minimax"
 }
 
@@ -43,4 +43,4 @@ MARGIN = {
 
 # IMAGE
 IMAGE_GHOST = ["images/Blinky.png", "images/Pinky.png", "images/Inky.png", "images/Clyde.png"]
-IMAGE_PACMAN = ["images/1_official.png", "images/2_official.png", "images/3_official.png", "images/4_official.png"]r
+IMAGE_PACMAN = ["images/1_official.png", "images/2_official.png", "images/3_official.png", "images/4_official.png"]
