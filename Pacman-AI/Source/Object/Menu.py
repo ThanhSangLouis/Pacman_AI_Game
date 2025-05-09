@@ -96,7 +96,7 @@ class Menu:
         self.algorithm_buttons = []
         options = []
         if self.current_level == 1:
-            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]
+            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking"]
         elif self.current_level == 2:
             options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]
         elif self.current_level == 3:
@@ -137,6 +137,7 @@ class Menu:
                 "UCS": "UCS",
                 "IDA* Search": "IDA*",
                 "ReflexAgentWithAStar": "ReflexAgentWithAStar",
+                "Backtracking": "Backtracking",
             }
             
             # Use the mapped algorithm name

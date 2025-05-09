@@ -1,9 +1,7 @@
 from Utils.utils import DDX, isValid
 from constants import FOOD
 
-MAX_DEPTH = 20  # Giới hạn độ sâu để tránh vô hạn vòng lặp
-
-# Mô phỏng vị trí Pacman sau khi thực hiện chuỗi bước
+MAX_DEPTH = 200  # Giới hạn độ sâu để tránh vô hạn vòng lặp
 
 def simulate_path(start_pos, moves):
     r, c = start_pos
@@ -32,8 +30,6 @@ def is_goal(_map, pos):
     return _map[r][c] == FOOD
 
 
-# Hàm chính của backtracking
-
 def Backtracking(_map, start_pos, N, M):
     result_path = []
 
@@ -58,4 +54,9 @@ def Backtracking(_map, start_pos, N, M):
         return False
 
     backtrack([])
-    return [[r, c] for r, c in result_path]
+
+    # ✅ Debug: xem kết quả thực tế
+    print("✅ Final path returned by Backtracking:", result_path)
+
+    # ⚠ Quan trọng: bỏ bước đầu tiên là vị trí hiện tại của Pacman
+    return [[r, c] for r, c in result_path[1:]] if len(result_path) > 1 else []

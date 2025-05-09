@@ -311,7 +311,8 @@ def startGame() -> None:
                 if (Level == 1 or Level == 2) and len(_food_Position) > 0:
                     algorithm = LEVEL_TO_ALGORITHM[f"LEVEL{Level}"]
 
-                    if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]:
+                    if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking"]:
+
                         if len(result) == 0:
                             # Nếu đã đi hết đường cũ → mới tìm đường mới
                             result = search.execute(ALGORITHMS=algorithm)
@@ -322,7 +323,11 @@ def startGame() -> None:
                         if len(result) > 0:
                             new_PacMan_Pos = result.pop(0)
                         else:
-                            new_PacMan_Pos = []
+                            if algorithm == "Backtracking":
+                                # ⚠ Nếu là backtracking và không tìm được đường thì dùng bước random để tránh kẹt
+                                new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
+                            else:
+                                new_PacMan_Pos = []
 
                     else:
                         new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
