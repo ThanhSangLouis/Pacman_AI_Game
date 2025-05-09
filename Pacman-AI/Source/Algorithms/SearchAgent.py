@@ -2,7 +2,7 @@ from Algorithms.AStar import AStar
 from Algorithms.AlphaBetaPruning import AlphaBetaAgent
 from Algorithms.BFS import BFS
 from Algorithms.DFS import DFS
-from Algorithms.Expectimax import ExpectAgent
+from Algorithms.Backtracking import Backtracking
 from Algorithms.LocalSearch import local_search
 from Algorithms.Minimax import minimaxAgent
 from Algorithms.HillClimbing import hill_simple, hill_steepest, hill_random
@@ -45,8 +45,8 @@ class SearchAgent:
             return AlphaBetaAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
         if ALGORITHMS == "AlphaBeta":
             return AlphaBetaPruning(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
-        if ALGORITHMS == "Expect":
-            return ExpectAgent(self.map, self.start_row, self.start_col, self.N, self.M, depth, Score)
+        if ALGORITHMS == "Backtracking":
+            return Backtracking(self.map, (self.start_row, self.start_col), self.N, self.M)
         if ALGORITHMS == "Hill Simple":
             return hill_simple(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "Hill Steepest":
