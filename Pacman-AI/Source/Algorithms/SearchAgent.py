@@ -5,7 +5,7 @@ from Algorithms.DFS import DFS
 from Algorithms.Backtracking import Backtracking
 from Algorithms.LocalSearch import local_search
 from Algorithms.Minimax import minimaxAgent
-from Algorithms.HillClimbing import hill_simple, hill_steepest, hill_random
+from Algorithms.HillClimbing import SA_HillClimbing
 from Algorithms.Greedy import Greedy
 from Algorithms.BeamSearch import BeamSearch
 from Algorithms.UCS import UCS
@@ -14,6 +14,7 @@ from Algorithms.AlphaBetaPruning import AlphaBetaAgent as AlphaBetaPruning
 from Algorithms.ReflexAgentWithAStar import ReflexAgentWithAStarWrapper
 from Algorithms.SimulatedAnnealing import SimulatedAnnealingForPacMan, calc_heuristic
 from Algorithms.Backtracking_ver2 import Backtracking_ver2
+
 
 
 class SearchAgent:
@@ -51,12 +52,8 @@ class SearchAgent:
             return Backtracking(self.map, (self.start_row, self.start_col), self.N, self.M)
         if ALGORITHMS == "Backtracking_ver2":
             return Backtracking_ver2(self.map, (self.start_row, self.start_col), self.N, self.M)
-        if ALGORITHMS == "Hill Simple":
-            return hill_simple(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
-        if ALGORITHMS == "Hill Steepest":
-            return hill_steepest(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
-        if ALGORITHMS == "Hill Random":
-            return hill_random(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+        if ALGORITHMS == "HillClimbing":
+            return SA_HillClimbing(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M, visited)
         if ALGORITHMS == "Greedy":
             return Greedy(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "Beam Search":

@@ -96,11 +96,11 @@ class Menu:
         self.algorithm_buttons = []
         options = []
         if self.current_level == 1:
-            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking", "Backtracking_Ver2" ]
+            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking", "Backtracking_Ver2"]
         elif self.current_level == 2:
             options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]
         elif self.current_level == 3:
-            options = ["Minimax", "AlphaBetaPruning", "Local Search", "ReflexAgentWithAStar", "SimulatedAnnealing"]
+            options = ["SimulatedAnnealing", "SA HillClimbing" ]
         elif self.current_level == 4:
             options = ["SimulatedAnnealing", "Minimax", "Expectimax", "AlphaBetaPruning"]
 
@@ -126,19 +126,15 @@ class Menu:
                 "BFS": "BFS",
                 "DFS": "DFS",
                 "A* Search": "A*",
-                "Local Search": "Local Search",
                 "Minimax": "Minimax",
                 "AlphaBetaPruning": "AlphaBetaPruning",
-                "Expectimax": "Expectimax",
-                "Steepest-Ascent hill climbing": "Hill Steepest",
-                "Stochastic hill Climbing": "Hill Random",
                 "Beam Search": "Beam Search",
                 "Greedy": "Greedy",
                 "UCS": "UCS",
                 "IDA* Search": "IDA*",
-                "ReflexAgentWithAStar": "ReflexAgentWithAStar",
                 "Backtracking": "Backtracking",
                 "Backtracking_Ver2": "Backtracking_ver2",
+                "SA HillClimbing": "HillClimbing",
             }
             
             # Use the mapped algorithm name

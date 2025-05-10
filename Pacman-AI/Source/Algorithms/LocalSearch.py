@@ -61,16 +61,12 @@ def calc_heuristic(_map, start_row, start_col, current_row, current_col, N, M, d
 def local_search(_map, start_row, start_col, N, M, _visited):
     visited = []
     cost = [[0 for _ in range(M)] for _ in range(N)]
-
     calc_heuristic(_map, start_row, start_col, start_row, start_col, N, M, 3, visited, cost, _visited)
-
     max_f = float("-inf")
-
     result = []
     for [d_r, d_c] in DDX:
         new_row, new_col = start_row + d_r, start_col + d_c
         if cost[new_row][new_col] - _visited[new_row][new_col] > max_f and _map[new_row][new_col] != WALL:
             max_f = cost[new_row][new_col] - _visited[new_row][new_col]
             result = [new_row, new_col]
-
     return result
