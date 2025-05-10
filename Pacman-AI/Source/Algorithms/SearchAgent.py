@@ -13,6 +13,8 @@ from Algorithms.IDASearch import IDAStar
 from Algorithms.AlphaBetaPruning import AlphaBetaAgent as AlphaBetaPruning
 from Algorithms.ReflexAgentWithAStar import ReflexAgentWithAStarWrapper
 from Algorithms.SimulatedAnnealing import SimulatedAnnealingForPacMan, calc_heuristic
+from Algorithms.Backtracking_ver2 import Backtracking_ver2
+
 
 class SearchAgent:
     def __init__(self, _map, _food_Position, start_row, start_col, N, M):
@@ -47,6 +49,8 @@ class SearchAgent:
             return AlphaBetaPruning(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "Backtracking":
             return Backtracking(self.map, (self.start_row, self.start_col), self.N, self.M)
+        if ALGORITHMS == "Backtracking_ver2":
+            return Backtracking_ver2(self.map, (self.start_row, self.start_col), self.N, self.M)
         if ALGORITHMS == "Hill Simple":
             return hill_simple(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "Hill Steepest":

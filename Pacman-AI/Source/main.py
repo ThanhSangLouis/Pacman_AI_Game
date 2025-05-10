@@ -311,7 +311,7 @@ def startGame() -> None:
                 if (Level == 1 or Level == 2) and len(_food_Position) > 0:
                     algorithm = LEVEL_TO_ALGORITHM[f"LEVEL{Level}"]
 
-                    if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking"]:
+                    if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2"]:
 
                         if len(result) == 0:
                             # Nếu đã đi hết đường cũ → mới tìm đường mới
