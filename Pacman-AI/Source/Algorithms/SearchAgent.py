@@ -15,7 +15,7 @@ from Algorithms.ReflexAgentWithAStar import ReflexAgentWithAStarWrapper
 from Algorithms.SimulatedAnnealing import SimulatedAnnealingForPacMan, calc_heuristic
 from Algorithms.Backtracking_ver2 import Backtracking_ver2
 from Algorithms.AndOrSearch import and_or_graph_search
-
+from Algorithms.QLearning import QLearning
 
 
 class SearchAgent:
@@ -76,6 +76,8 @@ class SearchAgent:
                 self.start_row = move[0][0]
                 self.start_col = move[0][1]
             return move
+        if ALGORITHMS == "Q-Learning":
+            return QLearning(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
 
 
 

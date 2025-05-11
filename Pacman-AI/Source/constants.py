@@ -43,4 +43,4 @@ MARGIN = {
 
 # IMAGE
 IMAGE_GHOST = ["images/Blinky.png", "images/Pinky.png", "images/Inky.png", "images/Clyde.png"]
-IMAGE_PACMAN = ["images/1_official.png", "images/2_official.png", "images/3_official.png", "images/4_official.png"]
+IMAGE_PACMAN = ["images/1.png", "images/2.png", "images/3.png", "images/4.png"]

@@ -348,8 +348,9 @@ def startGame() -> None:
                                 print("❌ Không thể tìm thấy kế hoạch đến mục tiêu!")
                             new_PacMan_Pos = list(pos)  # Giữ nguyên vị trí
 
+                    elif algorithm == "Q-Learning":
+                        new_PacMan_Pos = search.execute(ALGORITHMS=algorithm)
 
-                                                                        
                     elif algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2"]:
 
                         if len(result) == 0:
