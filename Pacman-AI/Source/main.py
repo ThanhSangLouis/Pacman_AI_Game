@@ -10,6 +10,7 @@ from Object.Wall import Wall
 from Utils.utils import DDX, isValid2
 from constants import *
 from Object.Menu import Menu, Button
+from Algorithms.AndOrSearch import and_or_graph_search, get_first_action, move_from_action, is_goal, extract_next_action
 
 N = M = Score = _state_PacMan = 0
 _map = []
@@ -181,6 +182,8 @@ def randomPacManNewPos(_map, row, col, _N, _M):
 def startGame() -> None: 
     global _map, _visited, Score # visited: lưu số lần Pac-Man đi qua mỗi ô (dùng trong Local Search)
     prev_pos = None
+    plan = None
+    path = []
     _ghost_new_position = []
     result = []
     new_PacMan_Pos: list = []
@@ -270,7 +273,13 @@ def startGame() -> None:
                             _food.pop(idx)
                             _food_Position.pop(idx)
                             Score += 20
-                            break
+
+                            # ✅ Chỉ reset kế hoạch khi chắc chắn đã ăn
+                            plan = None  # ✅ Reset kế hoạch khi ăn xong
+                            print("✅ PacMan đã ăn food tại", (row_food, col_food), "→ reset plan")
+                            
+
+                            break  # QUAN TRỌNG: phải break để tránh dùng idx bên ngoài
                     new_PacMan_Pos = []
 
 
@@ -301,6 +310,7 @@ def startGame() -> None:
                     continue
 
                 [row, col] = PacMan.getRC()
+                pos = tuple(PacMan.getRC())
 
                 # cài đặt thuật toán ở đây, thay đổi ALGORITHM trong file constants.py
                 # thuật toán chỉ cần trả về vị trí mới theo format [new_row, new_col] cho biến new_PacMan_Pos
@@ -310,6 +320,33 @@ def startGame() -> None:
                 search = SearchAgent(_map, _food_Position, row, col, N, M) # Khởi tạo thuật toán tìm kiếm
                 if (Level == 1 or Level == 2) and len(_food_Position) > 0:
                     algorithm = LEVEL_TO_ALGORITHM[f"LEVEL{Level}"]
+                    
+                    if algorithm == "AND_OR":
+                        pos = tuple(PacMan.getRC())  # Lấy vị trí hiện tại của PacMan
+                        food_pos = set(tuple(p) for p in _food_Position)  # Tập hợp vị trí thức ăn
+
+                        # Nếu chưa có kế hoạch hoặc PacMan đã đạt mục tiêu, tạo kế hoạch mới
+                        if plan is None or is_goal(food_pos, pos[0], pos[1]):
+                            plan = and_or_graph_search(_map, pos, N, M, food_pos)
+                            print(f"📌 New plan from {pos}")
+
+                        # Nếu kế hoạch tồn tại và là một tuple, thực hiện bước tiếp theo
+                        if isinstance(plan, tuple):
+                            action, plan = extract_next_action(plan)  # Trích xuất hành động từ kế hoạch
+                            new_pos = move_from_action(pos, action)  # Tính toán vị trí mới
+
+                            # Kiểm tra tính hợp lệ của vị trí mới
+                            if isValid2(_map, new_pos[0], new_pos[1], N, M):
+                                new_PacMan_Pos = list(new_pos)
+                                print(f"➡️ PacMan sẽ đi {action} đến {new_PacMan_Pos}")
+                            else:
+                                print("⚠️ Hành động không hợp lệ:", action)
+                                new_PacMan_Pos = list(pos)  # Giữ nguyên vị trí nếu hành động không hợp lệ
+                        else:
+                            # Xử lý khi kế hoạch thất bại
+                            if plan == 'FAILURE':
+                                print("❌ Không thể tìm thấy kế hoạch đến mục tiêu!")
+                            new_PacMan_Pos = list(pos)  # Giữ nguyên vị trí
 
                     if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2", ]:
 
@@ -453,7 +490,7 @@ def handleEndGame(status: int):
 
 
 def showMenu():
-    _menu = Menu(screen) # Hiển thị menu
+    _menu = Menu(screen) # Hiển thị menuz
     global Level, Map_name
     [Level, Map_name] = _menu.run() # Lấy level và bản đồ đã chọn
     startGame()

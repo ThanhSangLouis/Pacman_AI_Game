@@ -14,6 +14,7 @@ from Algorithms.AlphaBetaPruning import AlphaBetaAgent as AlphaBetaPruning
 from Algorithms.ReflexAgentWithAStar import ReflexAgentWithAStarWrapper
 from Algorithms.SimulatedAnnealing import SimulatedAnnealingForPacMan, calc_heuristic
 from Algorithms.Backtracking_ver2 import Backtracking_ver2
+from Algorithms.AndOrSearch import and_or_graph_search
 
 
 
@@ -50,6 +51,8 @@ class SearchAgent:
             return AlphaBetaPruning(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "Backtracking":
             return Backtracking(self.map, (self.start_row, self.start_col), self.N, self.M)
+        if ALGORITHMS == "AND_OR":
+            return and_or_graph_search(self.map, (self.start_row, self.start_col), self.N, self.M, set(tuple(p) for p in self.food_Position))
         if ALGORITHMS == "Backtracking_ver2":
             return Backtracking_ver2(self.map, (self.start_row, self.start_col), self.N, self.M)
         if ALGORITHMS == "HillClimbing":
