@@ -348,7 +348,9 @@ def startGame() -> None:
                                 print("❌ Không thể tìm thấy kế hoạch đến mục tiêu!")
                             new_PacMan_Pos = list(pos)  # Giữ nguyên vị trí
 
-                    if algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2", ]:
+
+                                                                        
+                    elif algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2"]:
 
                         if len(result) == 0:
                             # Nếu đã đi hết đường cũ → mới tìm đường mới
@@ -365,7 +367,7 @@ def startGame() -> None:
                                 new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
                             else:
                                 new_PacMan_Pos = []
-
+  
                     else:
                         new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
 
@@ -383,11 +385,9 @@ def startGame() -> None:
                             new_PacMan_Pos = move[0]
                         else:
                             new_PacMan_Pos = []
-                    
                     elif algorithm == "HillClimbing":
                         new_PacMan_Pos = search.execute(ALGORITHMS=algorithm, visited=_visited)
                         _visited[row][col] += 1
-                        
                     # Nếu vẫn không tìm ra bước đi
                     if len(_food_Position) > 0 and (not isinstance(new_PacMan_Pos, list) or len(new_PacMan_Pos) == 0 or [row, col] == new_PacMan_Pos):
                         new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M) # Nếu PacMan chạm vào ma thì dừng lại và cập nhật vị trí mới
