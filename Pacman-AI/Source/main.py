@@ -351,7 +351,7 @@ def startGame() -> None:
                     elif algorithm == "Q-Learning":
                         new_PacMan_Pos = search.execute(ALGORITHMS=algorithm)
 
-                    elif algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2"]:
+                    elif algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2", "A*"]:
 
                         if len(result) == 0:
                             # Nếu đã đi hết đường cũ → mới tìm đường mới

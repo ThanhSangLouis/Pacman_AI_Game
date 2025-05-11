@@ -96,13 +96,13 @@ class Menu:
         self.algorithm_buttons = []
         options = []
         if self.current_level == 1:
-            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking", "Backtracking_Ver2","AndOr", "Q-Learning"]
+            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking", "Backtracking_Ver2", "AndOr", "Q-Learning"]
         elif self.current_level == 2:
-            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy"]
+            options = ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "A* Search"]
         elif self.current_level == 3:
             options = ["SimulatedAnnealing", "SA HillClimbing" ]
         elif self.current_level == 4:
-            options = ["SimulatedAnnealing", "Minimax", "Expectimax", "AlphaBetaPruning"]
+            options = ["SimulatedAnnealing", "Minimax", "AlphaBetaPruning"]
 
         start_y = 80
         space_y = 70  # khoảng cách dọc đều hơn

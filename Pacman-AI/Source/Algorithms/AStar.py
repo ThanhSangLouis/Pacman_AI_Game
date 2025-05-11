@@ -10,10 +10,8 @@ def AStar(_map, _food_Position, start_row, start_col, N, M):
     path = []
     queue = PriorityQueue()
 
-    [food_row, food_col, _id] = find_nearest_food(_food_Position, start_row, start_col)
+    [food_row, food_col] = find_nearest_food(_food_Position, start_row, start_col)
 
-    if _id == -1:
-        return []
 
     start = (start_row, start_col)
     end = (food_row, food_col)
