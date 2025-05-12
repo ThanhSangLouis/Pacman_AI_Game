@@ -3,7 +3,7 @@ from constants import FOOD
 import random
 import pickle # Dùng để lưu và tải Q-table
 
-q_table = {}  # Q-table lưu giá trị Q cho từng S(state, action)
+q_table = {}  # Q-table lưu giá trị Q(s,a)
 alpha = 0.2   # Tốc độ học
 gamma = 0.95  # Hệ số giảm
 epsilon = 0.2 # Tỉ lệ khám phá (exploration rate)
@@ -52,7 +52,7 @@ def QLearning(_map, _food_Position, row, col, N, M):
 
     state = encode_state(row, col, _food_Position)
     action = choose_action(state) # Chọn hành động theo chiến lược epsilon-greedy
-    # Sư dụng hành động đã chọn để tính vị trí mới cho Pacman
+    # Sử dụng hành động đã chọn để tính vị trí mới cho Pacman
     d_r, d_c = DDX[action]
     new_row, new_col = row + d_r, col + d_c
 
@@ -65,6 +65,7 @@ def QLearning(_map, _food_Position, row, col, N, M):
     if _map[new_row][new_col] == FOOD:
         reward += 50
 
+    # Nếu Pacman ăn FOOD -> loại vị trí đó khỏi danh sách next_food
     next_food = [f for f in _food_Position if f != [new_row, new_col]]
     next_state = encode_state(new_row, new_col, next_food)
 

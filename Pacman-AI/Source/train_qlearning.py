@@ -4,7 +4,7 @@ from Algorithms.QLearning import QLearning, save_q_table, load_q_table
 from constants import FOOD
 from Utils.utils import isValid2
 
-def train_on_map(map_path, episodes=1000):
+def train_on_map(map_path, episodes=10000):
     with open(map_path, "r") as f:
         N, M = map(int, f.readline().split())
         _map = []
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     for map_file in map_files:
         map_path = os.path.join(level1_folder, map_file)
         print(f"🚀 Training on: {map_file}")
-        train_on_map(map_path, episodes=1000)
+        train_on_map(map_path, episodes=10000)
 
     save_q_table()
     print("Đã train tất cả map Level1 và lưu qtable.pkl")
