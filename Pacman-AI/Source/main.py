@@ -445,9 +445,9 @@ done_2 = False
 def handleEndGame(status: int):
     global done_2
     done_2 = False
-    bg = pygame.image.load("images/gameover_bg.png")
+    bg = pygame.image.load("images/gameover_bg1.png")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
-    bg_w = pygame.image.load("images/win.jpg")
+    bg_w = pygame.image.load("images/win.png")
     bg_w = pygame.transform.scale(bg_w, (WIDTH, HEIGHT))
 
     def clickContinue():

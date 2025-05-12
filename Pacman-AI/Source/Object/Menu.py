@@ -10,7 +10,7 @@ from Object.Wall import Wall
 from Object.Food import Food 
 
 clock = pygame.time.Clock()
-bg = pygame.image.load("images/home_bg.png")
+bg = pygame.image.load("images/home_bg1.png")
 bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 pygame.init()
 font = pygame.font.SysFont('Arial', 40)
