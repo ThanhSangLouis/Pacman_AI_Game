@@ -6,7 +6,8 @@ import sys
 from constants import FPS, WIDTH, HEIGHT, BLUE, BLACK, WALL, FOOD, WHITE, YELLOW, MONSTER, IMAGE_GHOST, \
     IMAGE_PACMAN
 from constants import LEVEL_TO_ALGORITHM
-
+from Object.Wall import Wall
+from Object.Food import Food 
 
 clock = pygame.time.Clock()
 bg = pygame.image.load("images/home_bg.png")
@@ -19,7 +20,12 @@ _N = _M = 0
 __map = 0
 SIZE_WALL = 20
 
-
+# Custom color scheme
+BTN_BLUE = "#63B8FF"       # Deep blue for normal
+BTN_HOVER = "#FFCC99"      # Light yellow for hover
+BTN_TEXT = "#1C1C1C"      # White text
+BTN_BORDER = "#FF4500"     # Red border
+BACKGROUND_COLOR = "#1C1C1C"  # Light peach skin color
 
 class Button:
     def __init__(self, x, y, width, height, screen, buttonText="Button", onClickFunction=None):
@@ -29,39 +35,39 @@ class Button:
         self.height = height
         self.onClickFunction = onClickFunction
         self.screen = screen
-        self.wasClicked = False  # Track if button was already clicked
+        self.wasClicked = False
 
         self.fillColors = {
-            'normal': '#FF4500',
-            'hover': '#FF6347',
-            'pressed': '#FF7F50',
+            'normal': BTN_BLUE,
+            'hover': BTN_HOVER,
+            'pressed': BTN_HOVER
         }
 
         self.buttonSurface = pygame.Surface((self.width, self.height))
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.buttonSurf = font.render(buttonText, True, (255, 255, 255))
+        self.buttonSurf = font.render(buttonText, True, pygame.Color(BTN_TEXT))
 
     def process(self):
         mousePos = pygame.mouse.get_pos()
         self.buttonSurface.fill(self.fillColors['normal'])
-        
         if self.buttonRect.collidepoint(mousePos):
             self.buttonSurface.fill(self.fillColors['hover'])
-            # Check if the mouse is clicked and the button hasn't been clicked yet
             if pygame.mouse.get_pressed()[0] and not self.wasClicked:
                 self.buttonSurface.fill(self.fillColors['pressed'])
                 self.wasClicked = True
                 if self.onClickFunction:
                     self.onClickFunction()
-            # Reset wasClicked when mouse button is released
             elif not pygame.mouse.get_pressed()[0]:
                 self.wasClicked = False
 
-        self.buttonSurface.blit(self.buttonSurf, [
-            self.buttonRect.width / 2 - self.buttonSurf.get_rect().width / 2,
-            self.buttonRect.height / 2 - self.buttonSurf.get_rect().height / 2
-        ])
-        pygame.draw.rect(self.buttonSurface, BLUE, (0, 0, self.width, self.height), 5)
+        self.buttonSurface.blit(
+            self.buttonSurf,
+            [
+                self.buttonRect.width / 2 - self.buttonSurf.get_rect().width / 2,
+                self.buttonRect.height / 2 - self.buttonSurf.get_rect().height / 2
+            ]
+        )
+        pygame.draw.rect(self.buttonSurface, pygame.Color(BTN_BORDER), (0, 0, self.width, self.height), 3)
         self.screen.blit(self.buttonSurface, self.buttonRect)
 
 class Menu:
@@ -91,6 +97,7 @@ class Menu:
         self.btnBack = Button(40, HEIGHT // 4 * 3 + 35, 150, 100, screen, "BACK", self.myFunction)
         self.selected_algorithm = None
         self.algorithm_buttons = []
+        self.hover_algorithm_index = -1  # Track hovered button index
 
     def load_algorithm_buttons(self):
         self.algorithm_buttons = []
@@ -104,16 +111,25 @@ class Menu:
         elif self.current_level == 4:
             options = ["SimulatedAnnealing", "Minimax", "AlphaBetaPruning"]
 
-        start_y = 80
-        space_y = 70  # khoảng cách dọc đều hơn
-        total_height = len(options) * space_y
+        # Tính toán chiều cao tổng cộng của tất cả nút
+        button_height = 60
+        button_margin = 7  # Khoảng cách giữa các nút
+        total_height = len(options) * (button_height + button_margin) - button_margin
 
-        first_button_y = (HEIGHT - total_height) // 2  # căn giữa theo chiều cao
+        # Vị trí bắt đầu (căn giữa theo chiều dọc)
+        start_y = (HEIGHT - total_height) // 2
 
+        # Tạo các nút thuật toán với hiệu ứng
         for idx, algo in enumerate(options):
-            btn = Button(
-                WIDTH // 2 - 150, first_button_y + idx * space_y, 300, 60, self.screen,
-                algo, lambda a=algo: self.select_algorithm(a)
+            btn = AlgorithmButton(
+                WIDTH // 2 - 150,  # x
+                start_y + idx * (button_height + button_margin),  # y
+                300,  # width
+                button_height,  # height
+                self.screen,
+                algo,  # text
+                lambda a=algo: self.select_algorithm(a),  # onclick function
+                idx  # button index for hover tracking
             )
             self.algorithm_buttons.append(btn)
 
@@ -233,21 +249,16 @@ class Menu:
             for j in range(M):
                 cell = int(line[j])
                 if cell == WALL:
-                    image = pygame.Surface([SIZE_WALL, SIZE_WALL])
-                    # image.fill(color)
-                    pygame.draw.rect(image, BLUE, (0, 0, SIZE_WALL, SIZE_WALL), 1)
                     top = i * SIZE_WALL + MARGIN_TOP
                     left = j * SIZE_WALL + MARGIN_LEFT
-                    self.screen.blit(image, (left, top))
-                elif cell == FOOD:
-                    image = pygame.Surface([SIZE_WALL // 2, SIZE_WALL // 2])
-                    image.fill(WHITE)
-                    image.set_colorkey(WHITE)
-                    pygame.draw.ellipse(image, YELLOW, [0, 0, SIZE_WALL // 2, SIZE_WALL // 2])
+                    wall_preview = Wall(i, j, preview=True)
+                    self.screen.blit(wall_preview.image, (left, top))
 
-                    top = i * SIZE_WALL + MARGIN_TOP + SIZE_WALL // 2 - SIZE_WALL // 4
-                    left = j * SIZE_WALL + MARGIN_LEFT + SIZE_WALL // 2 - SIZE_WALL // 4
-                    self.screen.blit(image, (left, top))
+
+                elif cell == FOOD:
+                    preview_food = Food(i, j, 8, 8, WHITE, preview=True)
+                    self.screen.blit(preview_food.image, (j * SIZE_WALL + MARGIN_LEFT, i * SIZE_WALL + MARGIN_TOP))
+
                 elif cell == MONSTER:
                     image = pygame.image.load(IMAGE_GHOST[count_ghost]).convert_alpha()
                     image = pygame.transform.scale(image, (SIZE_WALL, SIZE_WALL))
@@ -270,7 +281,6 @@ class Menu:
             self.done = True
 
     def run(self):
-
         while not self.done:
             self.clicked = False
             for event in pygame.event.get():
@@ -279,20 +289,28 @@ class Menu:
                     sys.exit(0)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.clicked = True
+                if event.type == pygame.MOUSEMOTION:
+                    # Update hover state for algorithm buttons
+                    mousePos = pygame.mouse.get_pos()
+                    if self.current_screen == 5:
+                        self.hover_algorithm_index = -1
+                        for btn in self.algorithm_buttons:
+                            if btn.buttonRect.collidepoint(mousePos):
+                                self.hover_algorithm_index = btn.index
 
             if self.current_screen == 1:
                 self.screen.blit(bg, (0, 0))
                 self.btnStart.process()
 
             elif self.current_screen == 2:
-                self.screen.fill(BLACK)
+                self.screen.fill(pygame.Color(BACKGROUND_COLOR))
                 self.btnLevel1.process()
                 self.btnLevel2.process()
                 self.btnLevel3.process()
                 self.btnLevel4.process()
 
             elif self.current_screen == 3:
-                self.screen.fill(BLACK)
+                self.screen.fill(pygame.Color(BACKGROUND_COLOR))
                 self.current_screen = 4
                 self.draw_map(self.map_name[self.current_map])
 
@@ -302,11 +320,78 @@ class Menu:
                 self.btnPlay.process()
                 self.btnBack.process()
             elif self.current_screen == 5:
-                self.screen.fill(BLACK)
+                self.screen.fill(pygame.Color(BACKGROUND_COLOR))
+                
+                # Draw title
+                title_text = f"Select Algorithm for Level {self.current_level}"
+                title_surface = pygame.font.SysFont('Arial', 36).render(title_text, True, WHITE)
+                self.screen.blit(title_surface, (20, 20)) 
+                
+                # Draw algorithm buttons with animations
                 for btn in self.algorithm_buttons:
-                    btn.process()
+                    btn.process(self.hover_algorithm_index)
+                
+                # Draw back button
+                back_btn = Button(40, HEIGHT - 100, 150, 60, self.screen, "Back", self.myFunction)
+                back_btn.process()
 
             pygame.display.flip()
             clock.tick(FPS)
 
         return [self.current_level, self.map_name[self.current_map]]
+class AlgorithmButton(Button):
+    def __init__(self, x, y, width, height, screen, buttonText="Button", onClickFunction=None, index=0):
+        super().__init__(x, y, width, height, screen, buttonText, onClickFunction)
+        self.index = index
+        self.animation_offset = 0
+        self.animation_direction = 1
+        self.animation_speed = 0.15
+        self.max_animation = 1.5
+        self.fillColors = {
+            'normal': BTN_BLUE,
+            'hover': BTN_HOVER,
+            'pressed': BTN_HOVER
+        }
+        self.borderColors = {
+            'normal': BTN_BORDER,
+            'hover': BTN_BORDER,
+            'pressed': BTN_BORDER
+        }
+        self.buttonSurf = font.render(buttonText, True, pygame.Color(BTN_TEXT))
+
+    def process(self, hover_index=-1):
+        mousePos = pygame.mouse.get_pos()
+        isHovered = self.index == hover_index or self.buttonRect.collidepoint(mousePos)
+        if isHovered:
+            self.animation_offset += self.animation_speed * self.animation_direction
+            if abs(self.animation_offset) >= self.max_animation:
+                self.animation_direction *= -1
+        else:
+            self.animation_offset *= 0.9
+        if pygame.mouse.get_pressed()[0] and isHovered and not self.wasClicked:
+            self.buttonSurface.fill(self.fillColors['pressed'])
+            border_color = pygame.Color(self.borderColors['pressed'])
+            self.wasClicked = True
+            if self.onClickFunction:
+                self.onClickFunction()
+        elif isHovered:
+            self.buttonSurface.fill(self.fillColors['hover'])
+            border_color = pygame.Color(self.borderColors['hover'])
+        else:
+            self.buttonSurface.fill(self.fillColors['normal'])
+            border_color = pygame.Color(self.borderColors['normal'])
+        if not pygame.mouse.get_pressed()[0]:
+            self.wasClicked = False
+        adjusted_x = self.x + (self.animation_offset if isHovered else 0)
+        adjusted_y = self.y
+        self.buttonSurface.blit(
+            self.buttonSurf,
+            [
+                self.buttonRect.width / 2 - self.buttonSurf.get_rect().width / 2,
+                self.buttonRect.height / 2 - self.buttonSurf.get_rect().height / 2
+            ]
+        )
+        pygame.draw.rect(self.buttonSurface, border_color, (0, 0, self.width, self.height), 3)
+        self.screen.blit(self.buttonSurface, (adjusted_x, adjusted_y))
+
+
