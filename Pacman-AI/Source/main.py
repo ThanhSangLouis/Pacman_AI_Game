@@ -363,7 +363,7 @@ def startGame() -> None:
                         if len(result) > 0:
                             new_PacMan_Pos = result.pop(0)
                         else:
-                            if algorithm == "Backtracking":
+                            if algorithm == ["Backtracking","Backtracking_ver2"]:
                                 # ⚠ Nếu là backtracking và không tìm được đường thì dùng bước random để tránh kẹt
                                 new_PacMan_Pos = randomPacManNewPos(_map, row, col, N, M)
                             else:
