@@ -1,6 +1,6 @@
 from Utils.utils import isValid, DDX, Manhattan
 
-def BeamSearch(_map, food_pos, row, col, N, M, beam_width=500): # beam_width là số lượng trạng thái tối đa tốt nhất được giữ lại trong mỗi bước
+def BeamSearch(_map, food_pos, row, col, N, M, beam_width=10): # beam_width là số lượng trạng thái tối đa tốt nhất được giữ lại trong mỗi bước
     if not food_pos:
         return []
     # Chọn vị trí thức ăn gần nhất dựa trên khoảng cách Manhattan từ vị trí hiện tại đên vị trí thức ăn
@@ -14,7 +14,7 @@ def BeamSearch(_map, food_pos, row, col, N, M, beam_width=500): # beam_width là
     
     while beam and iterations < max_iterations:
         iterations += 1
-        candidates = [] # Danh sách các trạng thái tìm năng trong bước tiếp theo
+        candidates = [] # Danh sách các trạng thái mới sẽ được sinh ra từ các trạng thái hiện tại trong beam
         
         # Duyệt qua từng trạng thái trong beam -> (r,c): vị trí hiện tại, path: đường đi từ vị trí bắt đầu đến vị trí hiện tại, cost: chi phí
         for (r, c), path, cost in beam:
@@ -26,7 +26,7 @@ def BeamSearch(_map, food_pos, row, col, N, M, beam_width=500): # beam_width là
                 new_r, new_c = r + d_r, c + d_c
                 
                 if isValid(_map, new_r, new_c, N, M):
-                    new_cost = len(path) + Manhattan(new_r, new_c, goal[0], goal[1]) # Tính chi phí mới là độ dài từ vị trí ban đầu đến ô hiện tại + khoảng cách từ ô mới đến vị trí mục tiêu
+                    new_cost = Manhattan(new_r, new_c, goal[0], goal[1]) # Tính chi phí mới là độ dài từ vị trí ban đầu đến ô hiện tại + khoảng cách từ ô mới đến vị trí mục tiêu
             
                     state_key = (new_r, new_c)
                     # Kiểm tra xem trạng thái (new_r, new_c) đã được xử lý trước đó với chi phí tốt hơn hoặc bằng new_cost hay chưa

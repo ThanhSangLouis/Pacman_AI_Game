@@ -11,7 +11,7 @@ def update_heuristic(_map, current_row, current_col, N, M, depth, visited, _type
     if depth < 0:
         return
         
-    # Khởi tạo điểm ảnh hưởng
+    # Khởi tạo điểm ảnh hưởng -> sẽ cộng vào heuristic_map
     point = 0
     # Nếu là FOOD, giá trị tăng dần khi gần thức ăn
     if _type == FOOD:
@@ -60,7 +60,7 @@ def SimulatedAnnealingForPacMan(_map, start_row, start_col, N, M, _visited, heur
     if not hasattr(SimulatedAnnealingForPacMan, 'recent_positions'):
         SimulatedAnnealingForPacMan.recent_positions = []
     
-    neighbors = []
+    neighbors = []                  
     # Duyệt các ô lân cận
     for d_r, d_c in DDX:
         new_row, new_col = start_row + d_r, start_col + d_c
@@ -117,7 +117,7 @@ def SimulatedAnnealingForPacMan(_map, start_row, start_col, N, M, _visited, heur
                 stuck_counter += 1
     
     recent_positions = SimulatedAnnealingForPacMan.recent_positions
-    recent_positions.append((move[0], move[1]))
+    recent_positions.append((move[0], move[1])) # Thêm vị trí pacman vừa di chuyển vào danh sách
     if len(recent_positions) > 5:
         recent_positions.pop(0)
     SimulatedAnnealingForPacMan.recent_positions = recent_positions

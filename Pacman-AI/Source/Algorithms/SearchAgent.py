@@ -28,9 +28,9 @@ class SearchAgent:
         self.M = M
         self.visited = [[0 for _ in range(M)] for _ in range(N)]
         self.prev_pos = None
-        self.T = 1000
+        self.T = 100
         self.stuck_counter = 0
-        self.heuristic_map = calc_heuristic(self.map, self.N, self.M)  # ⭐⭐ Tính heuristic 1 lần duy nhất
+        self.heuristic_map = calc_heuristic(self.map, self.N, self.M)  # Tính heuristic 1 lần duy nhất
 
 
 
