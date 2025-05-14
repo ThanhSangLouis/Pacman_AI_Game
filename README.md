@@ -156,10 +156,24 @@ py main.py
 
 ## 🚀 MỞ RỘNG & ỨNG DỤNG
 
-* Có thể tích hợp thêm thuật toán: Genetic Algorithm, Deep Q-Learning, Policy Gradient
+* Có thể tích hợp thêm thuật toán: Genetic Algorithm, Deep Q-Learning, Policy Gradient ...
 * Mở rộng giao diện thêm phần phân tích thống kê: số bước, thời gian, số node mở rộng
 * Tạo mode "Học vs Học": Q-Learning Pacman đấu DQN Ghost
+
+
+## ✍️ TÁC GIẢ
+
+Dự án được thực hiện bởi nhóm sinh viên lớp AI:
+
+- **Lê Văn Chiến Thắng**  
+- **Võ Thanh Sang**  
+- **Trình Nguyễn Hoàng Nguyên**
+
+Trường Đại học Sư phạm Kỹ thuật TP.HCM  
+Môn học: Trí tuệ Nhân tạo  
+Giảng viên hướng dẫn: TS. Phan Thị Huyền Trang
 
 ## 🌐 LINK DỰ ÁN
 
 [🔗 GitHub Repository](https://github.com/ThanhSangLouis/Pacman_AI_Game)
+
