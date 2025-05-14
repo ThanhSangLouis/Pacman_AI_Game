@@ -37,7 +37,6 @@ def evaluationFunction(_map, pac_row, pac_col, N, M, score):
 
     return _score
 
-
 def minimaxAgent(_map, pac_row, pac_col, N, M, depth, Score):
     def terminal(_map, _pac_row, _pac_col, _N, _M, _depth) -> bool:
         if _map[_pac_row][_pac_col] == MONSTER or _depth == 0:
