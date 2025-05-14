@@ -1,10 +1,13 @@
 # 🟡 Pacman-AI Game
 
+![Home](ImageREADME/Home.png)
+
 ## 🎯 GIỚI THIỆU TỔNG QUAN
 
 Dự án **Pacman-AI** là một sản phẩm học thuật được thực hiện bởi nhóm 13 trong khuôn khổ môn học **Trí tuệ Nhân tạo** tại Trường Đại học Sư phạm Kỹ thuật TP.HCM. Dự án kế thừa gameplay cổ điển của trò chơi Pacman nhưng thay vì người chơi trực tiếp điều khiển, nhân vật Pacman sẽ được dẫn dắt **tự động hoàn toàn bằng các thuật toán AI** theo từng cấp độ và môi trường khác nhau.
 
 > Không chỉ là một trò chơi giải trí, dự án là một sân chơi học thuật sáng tạo, giúp sinh viên vận dụng lý thuyết vào thực tiễn, trực quan hóa quá trình tìm kiếm và ra quyết định của các thuật toán.
+![Home](ImageREADME/Game1.png)
 
 ## 🧠 MỤC TIÊU DỰ ÁN
 
@@ -17,6 +20,8 @@ Dự án **Pacman-AI** là một sản phẩm học thuật được thực hi�
 ## 🧩 MÔ HÌNH HOẠT ĐỘNG
 
 Người dùng khởi chạy chương trình → Chọn **Level**, **Thuật toán**, **Bản đồ (.txt)** trong giao diện menu → Quan sát Pacman **tự động chơi** dựa trên thuật toán đã chọn → Kết thúc khi **ăn hết thức ăn** hoặc **bị bắt**.
+
+![Home](ImageREADME/Game2.png)
 
 ## 🎮 PHÂN CẤP ĐỘ CHƠI (LEVEL)
 
