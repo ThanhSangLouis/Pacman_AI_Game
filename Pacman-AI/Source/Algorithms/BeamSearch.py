@@ -26,7 +26,7 @@ def BeamSearch(_map, food_pos, row, col, N, M, beam_width=10): # beam_width là 
                 new_r, new_c = r + d_r, c + d_c
                 
                 if isValid(_map, new_r, new_c, N, M):
-                    new_cost = Manhattan(new_r, new_c, goal[0], goal[1]) # Tính chi phí mới là độ dài từ vị trí ban đầu đến ô hiện tại + khoảng cách từ ô mới đến vị trí mục tiêu
+                    new_cost = Manhattan(new_r, new_c, goal[0], goal[1]) # Tính chi phí mới là khoảng cách từ ô mới đến vị trí mục tiêu
             
                     state_key = (new_r, new_c)
                     # Kiểm tra xem trạng thái (new_r, new_c) đã được xử lý trước đó với chi phí tốt hơn hoặc bằng new_cost hay chưa
