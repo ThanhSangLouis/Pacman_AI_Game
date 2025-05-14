@@ -183,3 +183,18 @@ Giảng viên hướng dẫn: TS. Phan Thị Huyền Trang
 
 [🔗 GitHub Repository](https://github.com/ThanhSangLouis/Pacman_AI_Game)
 
+## 📚 TÀI LIỆU THAM KHẢO
+
+[1] GeeksforGeeks. (2025, May 3). *Python tutorial | Learn Python programming language*. GeeksforGeeks.  
+https://www.geeksforgeeks.org/python-programming-language-tutorial/?ref=shm
+
+[2] Wikipedia contributors. (2025, May 9). *Visual Studio Code*. Wikipedia.  
+https://en.wikipedia.org/wiki/Visual_Studio_Code
+
+[3] Russell, S., & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson.
+
+[4] UC Berkeley AI. (2025, May 13). *Project 2: Multi-Agent Pacman*. UC Berkeley Artificial Intelligence.  
+https://ai.berkeley.edu/multiget.html
+
+[5] nxhawk. (2020, September 19). *Pacman-AI*. GitHub.  
+https://github.com/nxhawk/Pacman-AI
