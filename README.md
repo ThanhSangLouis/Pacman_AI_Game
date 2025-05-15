@@ -29,7 +29,7 @@ Người dùng khởi chạy chương trình → Chọn **Level**, **Thuật to�
 | Level | Mô tả gameplay               | Môi trường             | AI Pacman                                                                                                  | AI Ghost             |
 |-------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|----------------------|
 | 1     | Ăn 1 food, không có ghost    | Mê cung tĩnh           | UCS, DFS, BFS, Beam Search, Greedy, Backtracking + Forward Checking, Backtracking + AC3, AndOr, Q-Learning | Không có             |
-| 2     | Ăn 1 food, có ghost đứng yên | Ghost thụ động         | BFS, DFS, UCS, Greedy, Beam Search, A*                                                                     | Di chuyển ngẫu nhiên |
+| 2     | Ăn 1 food, có ghost đứng yên | Ghost thụ động         | BFS, DFS, UCS, Greedy, Beam Search, A*                                                                     | Đứng yên             |
 | 3     | Nhiều food, ghost đi quanh   | Ghost tuần tra khu vực | SA Hill Climbing, Simulated Annealing                                                                      | Random theo vùng     |
 | 4     | Ghost truy sát thông minh    | Môi trường bất định    | Simulated Annealing, Minimax, Alpha-Beta                                                                   | A* truy đuổi         |
 
