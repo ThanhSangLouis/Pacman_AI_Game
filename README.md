@@ -86,6 +86,129 @@ Người dùng khởi chạy chương trình → Chọn **Level**, **Thuật to�
 
 ➡️ Mô phỏng game 2 người. Pacman là Max, Ghost là Min. Sử dụng evaluation function có trọng số để đánh giá.
 
+## 🎬 Minh họa các thuật toán theo 4 cấp độ (Level) và nhóm thuật toán
+
+Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một hoặc nhiều nhóm thuật toán trong tổng số 7 nhóm chính, giúp người dùng dễ quan sát và so sánh hiệu quả từng nhóm trong môi trường cụ thể.
+
+---
+
+### Level 1 — Mê cung tĩnh, không có ghost
+
+- **Nhóm 1: Tìm kiếm không có thông tin (Uninformed Search)**
+  - Uniform Cost Search (UCS)
+  - Depth-First Search (DFS)
+  - Breadth-First Search (BFS)
+
+- **Nhóm 2: Tìm kiếm có thông tin (Informed Search)**
+  - Beam Search
+  - Greedy Search
+
+- **Nhóm 6: Tìm kiếm trong môi trường có ràng buộc (Constraint Satisfaction Search)**
+  - Backtracking + Forward Checking
+  - Backtracking + AC-3
+
+- **Nhóm 4: Tìm kiếm trong môi trường phức tạp**
+  - AND-OR Graph Search
+
+- **Nhóm 5: Học tăng cường (Reinforcement Learning)**
+  - Q-Learning
+
+
+---
+
+### Level 2 — Có ghost đứng yên
+
+- **Nhóm 1: Tìm kiếm không có thông tin**
+  - BFS
+  - DFS
+  - UCS
+
+- **Nhóm 2: Tìm kiếm có thông tin**
+  - Greedy Search
+  - Beam Search
+  - A* Search
+
+
+---
+
+### Level 3 — Ghost tuần tra khu vực
+
+- **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
+  - Steepest-Ascent Hill Climbing
+  - Simulated Annealing
+
+- **Nhóm 1: Tìm kiếm không có thông tin**
+  - Random Ghost Movement
+
+
+---
+
+### Level 4 — Ghost truy sát thông minh
+
+- **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
+  - Simulated Annealing
+
+- **Nhóm 7: Tìm kiếm đối kháng (Adversarial Search)**
+  - Minimax
+  - Alpha-Beta Pruning
+
+
+---
+
+## ⚖️ So sánh điểm số thực tế theo từng cấp độ (Level)
+
+Ta thực hiện chạy thử đồng loạt các thuật toán trong từng level trên cùng một bản đồ mẫu tương ứng và ghi nhận điểm số trung bình Pacman đạt được. Kết quả giúp đánh giá hiệu quả từng nhóm thuật toán trong môi trường đặc thù của mỗi cấp độ.
+
+---
+
+### Level 1 — Mê cung tĩnh, không có ghost
+
+| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
+|----------------------------|--------------------|--------------------------------------------|
+| BFS                        | 1150               | Tìm đường ngắn, chạy ổn định                |
+| DFS                        | 850                | Dễ lạc đường, không hiệu quả                 |
+| UCS                        | 1200               | Tối ưu chi phí đường đi                       |
+| Beam Search                | 1250               | Giữ nhiều lựa chọn, nhanh hơn BFS             |
+| Greedy Search              | 1180               | Nhanh nhưng không luôn tìm được đường tối ưu  |
+| Backtracking + AC-3        | 1100               | Xử lý ràng buộc tốt, có thể chậm hơn         |
+| AND-OR Graph Search        | 1050               | Xử lý trạng thái phức tạp                     |
+| Q-Learning                 | 1000               | Học từ kinh nghiệm, chưa tối ưu ngay          |
+
+---
+
+### Level 2 — Có ghost đứng yên
+
+| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
+|----------------------------|--------------------|--------------------------------------------|
+| BFS                        | 1050               | Chậm và có thể bị ghost bắt                  |
+| DFS                        | 800                | Ít hiệu quả, dễ mắc bẫy ghost                  |
+| UCS                        | 1100               | Tối ưu đường đi, tránh ghost phần nào          |
+| Greedy Search              | 1150               | Tốt với heuristic đơn giản                    |
+| Beam Search                | 1200               | Cân bằng giữa tốc độ và hiệu quả               |
+| A* Search                  | 1300               | Tìm đường nhanh, thông minh tránh ghost        |
+
+---
+
+### Level 3 — Ghost tuần tra khu vực
+
+| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
+|----------------------------|--------------------|--------------------------------------------|
+| Simulated Annealing        | 1150               | Có thể vượt local maxima, tránh ghost hiệu quả  |
+| SA Hill Climbing           | 1100               | Nhanh nhưng có thể mắc kẹt                      |
+| Random Ghost Movement      | 900                | Ít hiệu quả, không dự đoán được ghost            |
+
+---
+
+### Level 4 — Ghost truy sát thông minh
+
+| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
+|----------------------------|--------------------|--------------------------------------------|
+| Simulated Annealing        | 1100               | Khó khăn do ghost thông minh, vẫn có thể vượt local maxima  |
+| Minimax                    | 1250               | Tính đối kháng, rất cẩn thận tránh ghost        |
+| Alpha-Beta Pruning         | 1280               | Tối ưu Minimax, nhanh hơn với độ sâu lớn        |
+
+---
+
 ## 🧠 HÀM ĐÁNH GIÁ & CHI PHÍ
 
 * **A***: `f(n) = g(n) + h(n)` với `h(n)` là khoảng cách Manhattan đến food.
