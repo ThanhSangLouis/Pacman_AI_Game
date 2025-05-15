@@ -36,7 +36,8 @@ class SearchAgent:
 
     def execute(self, ALGORITHMS, visited=None, depth=4, Score=0):
         if ALGORITHMS == "BFS":
-            return BFS(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
+            goal_row, goal_col = self.food_Position[0]  # Extract the goal position
+            return BFS(self.map, self.start_row, self.start_col, goal_row, goal_col, self.N, self.M)
         if ALGORITHMS == "DFS":
             return DFS(self.map, self.food_Position, self.start_row, self.start_col, self.N, self.M)
         if ALGORITHMS == "A*":
