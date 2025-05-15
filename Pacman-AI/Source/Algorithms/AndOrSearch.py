@@ -26,7 +26,7 @@ def is_goal(food_pos, row, col):
 
 def and_or_graph_search(_map, state, N, M, goal_set):
     def andorsearch(state, path):
-        print("🟡 OR node:", state)
+        print("🟡 OR node:", state)  # Đây là node OR: lựa chọn hành động từ trạng thái hiện tại
 
         if is_goal(goal_set, state[0], state[1]):
             print("🎯 REACHED GOAL at", state)
@@ -36,22 +36,32 @@ def and_or_graph_search(_map, state, N, M, goal_set):
             print("🔁 LOOP DETECTED at", state)
             return 'FAILURE'
 
-        path = path + [state]  # Tạo bản sao, không sửa trực tiếp
+        path = path + [state]  # Sao chép path, không sửa path gốc
 
+        # Duyệt từng hành động có thể thực hiện từ state hiện tại (node OR)
         for action in ACTIONS:
             outcomes = apply_action(state, action, _map, N, M)
             subplans = []
 
+            print(f"    ⚙️ AND node for action '{action}': outcomes = {outcomes}")  
+            # Node AND thể hiện các kết quả khác nhau của 1 hành động phải đều thành công
+
+            # Với mỗi kết quả có thể của hành động, gọi đệ quy
             for outcome in outcomes:
-                if outcome != state:  # Chỉ tiếp tục nếu trạng thái mới khác trạng thái hiện tại
+                if outcome != state:  # Nếu trạng thái mới khác trạng thái hiện tại
                     subplan = andorsearch(outcome, path)
                     if subplan == 'FAILURE':
-                        break
+                        print(f"    ❌ Outcome {outcome} của action '{action}' thất bại, bỏ qua action này")
+                        break  # Nếu một outcome fail, bỏ luôn hành động này
                     subplans.append(subplan)
 
+            # Nếu tất cả các outcomes đều thành công (đủ số), trả về kế hoạch
             if len(subplans) == len(outcomes):
+                print(f"    ✅ Action '{action}' thành công với subplans: {subplans}")
                 return (action, subplans)
 
+        # Nếu không hành động nào thành công, trả về failure
+        print(f"❌ OR node tại {state} không có hành động thành công")
         return 'FAILURE'
 
     return andorsearch(state, [])
