@@ -168,7 +168,7 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 
 Ta thực hiện chạy thử đồng loạt các thuật toán trong từng level trên cùng một bản đồ mẫu tương ứng và ghi nhận điểm số trung bình Pacman đạt được. Kết quả giúp đánh giá hiệu quả từng nhóm thuật toán trong môi trường đặc thù của mỗi cấp độ.
 
----
+
 
 ### Level 1 — Mê cung tĩnh, không có ghost
 
