@@ -90,7 +90,7 @@ Người dùng khởi chạy chương trình → Chọn **Level**, **Thuật to�
 
 Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một hoặc nhiều nhóm thuật toán trong tổng số 7 nhóm chính, giúp người dùng dễ quan sát và so sánh hiệu quả từng nhóm trong môi trường cụ thể.
 
----
+
 
 ### Level 1 — Mê cung tĩnh, không có ghost
 
