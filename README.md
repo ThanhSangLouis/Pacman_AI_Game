@@ -95,65 +95,74 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 ### Level 1 — Mê cung tĩnh, không có ghost
 
 - **Nhóm 1: Tìm kiếm không có thông tin (Uninformed Search)**
-  - Uniform Cost Search (UCS)
-  - Depth-First Search (DFS)
-  - Breadth-First Search (BFS)
+  - Uniform Cost Search (UCS)  
+    ![UCS](images/level1/ucs.gif)
+  - Depth-First Search (DFS)  
+    ![DFS](images/level1/dfs.gif)
+  - Breadth-First Search (BFS)  
+    ![BFS](images/level1/bfs.gif)
 
 - **Nhóm 2: Tìm kiếm có thông tin (Informed Search)**
-  - Beam Search
-  - Greedy Search
+  - Beam Search  
+    ![Beam Search](images/level1/beam_search.gif)
+  - Greedy Search  
+    ![Greedy Search](images/level1/greedy.gif)
 
 - **Nhóm 6: Tìm kiếm trong môi trường có ràng buộc (Constraint Satisfaction Search)**
-  - Backtracking + Forward Checking
-  - Backtracking + AC-3
+  - Backtracking + Forward Checking  
+    ![Backtracking + Forward Checking](images/level1/backtracking_forward_checking.gif)
+  - Backtracking + AC-3  
+    ![Backtracking + AC3](images/level1/backtracking_ac3.gif)
 
 - **Nhóm 4: Tìm kiếm trong môi trường phức tạp**
-  - AND-OR Graph Search
+  - AND-OR Graph Search  
+    ![AND-OR Graph Search](images/level1/and_or_search.gif)
 
 - **Nhóm 5: Học tăng cường (Reinforcement Learning)**
-  - Q-Learning
+  - Q-Learning  
+    ![Q-Learning](images/level1/q_learning.gif)
 
-
----
 
 ### Level 2 — Có ghost đứng yên
 
 - **Nhóm 1: Tìm kiếm không có thông tin**
-  - BFS
-  - DFS
-  - UCS
+  - BFS  
+    ![BFS](images/level2/bfs.gif)
+  - DFS  
+    ![DFS](images/level2/dfs.gif)
+  - UCS  
+    ![UCS](images/level2/ucs.gif)
 
 - **Nhóm 2: Tìm kiếm có thông tin**
-  - Greedy Search
-  - Beam Search
-  - A* Search
+  - Greedy Search  
+    ![Greedy Search](images/level2/greedy.gif)
+  - Beam Search  
+    ![Beam Search](images/level2/beam_search.gif)
+  - A* Search  
+    ![A* Search](images/level2/a_star.gif)
 
-
----
 
 ### Level 3 — Ghost tuần tra khu vực
 
 - **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
-  - Steepest-Ascent Hill Climbing
-  - Simulated Annealing
+  - Steepest-Ascent Hill Climbing  
+    ![Hill Climbing](images/level3/hill_climbing.gif)
+  - Simulated Annealing  
+    ![Simulated Annealing](images/level3/simulated_annealing.gif)
 
-- **Nhóm 1: Tìm kiếm không có thông tin**
-  - Random Ghost Movement
-
-
----
 
 ### Level 4 — Ghost truy sát thông minh
 
 - **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
-  - Simulated Annealing
+  - Simulated Annealing  
+    ![Simulated Annealing](images/level4/simulated_annealing.gif)
 
 - **Nhóm 7: Tìm kiếm đối kháng (Adversarial Search)**
-  - Minimax
-  - Alpha-Beta Pruning
+  - Minimax  
+    ![Minimax](images/level4/minimax.gif)
+  - Alpha-Beta Pruning  
+    ![Alpha-Beta Pruning](images/level4/alphabeta.gif)
 
-
----
 
 ## ⚖️ So sánh điểm số thực tế theo từng cấp độ (Level)
 
@@ -195,7 +204,6 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 |----------------------------|--------------------|--------------------------------------------|
 | Simulated Annealing        | 1150               | Có thể vượt local maxima, tránh ghost hiệu quả  |
 | SA Hill Climbing           | 1100               | Nhanh nhưng có thể mắc kẹt                      |
-| Random Ghost Movement      | 900                | Ít hiệu quả, không dự đoán được ghost            |
 
 ---
 
