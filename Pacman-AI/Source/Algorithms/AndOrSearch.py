@@ -25,7 +25,7 @@ def is_goal(food_pos, row, col):
     return (row, col) in food_pos
 
 def and_or_graph_search(_map, state, N, M, goal_set):
-    def or_search(state, path):
+    def andorsearch(state, path):
         print("🟡 OR node:", state)
 
         if is_goal(goal_set, state[0], state[1]):
@@ -44,7 +44,7 @@ def and_or_graph_search(_map, state, N, M, goal_set):
 
             for outcome in outcomes:
                 if outcome != state:  # Chỉ tiếp tục nếu trạng thái mới khác trạng thái hiện tại
-                    subplan = or_search(outcome, path)
+                    subplan = andorsearch(outcome, path)
                     if subplan == 'FAILURE':
                         break
                     subplans.append(subplan)
@@ -54,7 +54,7 @@ def and_or_graph_search(_map, state, N, M, goal_set):
 
         return 'FAILURE'
 
-    return or_search(state, [])
+    return andorsearch(state, [])
 
 def extract_next_action(plan):
     if isinstance(plan, tuple):
