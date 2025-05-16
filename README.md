@@ -199,7 +199,7 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 ### Level 1 — Mê cung tĩnh, không có ghost
 
-Hình ảnh dưới đây minh họa kết quả chạy thực tế của các thuật toán tìm đường tại Level 1 — một bản đồ mê cung tĩnh, không có ghost và chi phí di chuyển giữa các ô là như nhau. Đây là môi trường đơn giản nhưng là cơ sở để đánh giá khả năng tìm đường tối ưu (về bước đi và chi phí) của từng thuật toán trong điều kiện cơ bản nhất.
+Hình ảnh dưới đây minh họa kết quả chạy thực tế của các thuật toán tìm đường tại Level 1 trên cùng 1 bản đồ — một bản đồ mê cung tĩnh, không có ghost và chi phí di chuyển giữa các ô là như nhau. Đây là môi trường đơn giản nhưng là cơ sở để đánh giá khả năng tìm đường tối ưu (về bước đi và chi phí) của từng thuật toán trong điều kiện cơ bản nhất.
 
 ![Home](ImageREADME/Kq_lv1.png)
 
@@ -227,7 +227,7 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 
 ### Level 2 — Có ghost đứng yên
 
-Hình ảnh dưới đây minh họa kết quả chạy thực tế của các thuật toán tìm đường tại Level 2 — một bản đồ có ghost cố định, với độ khó vừa phải. Mỗi thuật toán được đánh giá dựa trên số bước đi (`steps`) và số node đã mở rộng (`expansions`). Đây là cơ sở để phân tích hiệu suất, mức độ tối ưu và khả năng tiết kiệm tài nguyên của từng thuật toán.
+Hình ảnh dưới đây minh họa kết quả chạy thực tế của các thuật toán tìm đường tại Level 2 trên cùng 1 bản đồ — một bản đồ có ghost cố định, với độ khó vừa phải. Mỗi thuật toán được đánh giá dựa trên số bước đi (`steps`) và số node đã mở rộng (`expansions`). Đây là cơ sở để phân tích hiệu suất, mức độ tối ưu và khả năng tiết kiệm tài nguyên của từng thuật toán.
 
 ![Home](ImageREADME/Kq_lv2.png)
 
