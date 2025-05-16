@@ -96,9 +96,11 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 - **Nhóm 1: Tìm kiếm không có thông tin (Uninformed Search)**
   - Uniform Cost Search (UCS)
     
+![ucsfix2](https://github.com/user-attachments/assets/2fe84ff9-1f15-4c0d-87e3-83ee4d1a73cb)
 
   - Depth-First Search (DFS)
 
+![dfsfix (1)](https://github.com/user-attachments/assets/4f7d3b0d-b9d7-419c-adfb-78a74f167bd4)
 
   - Breadth-First Search (BFS)  
 ![bfs (1)](https://github.com/user-attachments/assets/da72d783-d6f3-49ff-80f6-ac15aaa1d247)
@@ -106,62 +108,68 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 
 - **Nhóm 2: Tìm kiếm có thông tin (Informed Search)**
   - Beam Search  
-    ![Beam Search](images/level1/beam_search.gif)
+![beamfix](https://github.com/user-attachments/assets/3ab92406-af03-47aa-a513-0ba510bd4cc1)
+
   - Greedy Search  
-    ![Greedy Search](images/level1/greedy.gif)
+![greedyfix (1)](https://github.com/user-attachments/assets/2e8ca6d9-4e3a-4a80-88f0-1d9900ecc255)
+
 
 - **Nhóm 6: Tìm kiếm trong môi trường có ràng buộc (Constraint Satisfaction Search)**
   - Backtracking + Forward Checking  
-    ![Backtracking + Forward Checking](images/level1/backtracking_forward_checking.gif)
+![back1fix](https://github.com/user-attachments/assets/e8a8e5af-17a7-4fde-955d-8eb2b9da34d8)
+
   - Backtracking + AC-3  
-    ![Backtracking + AC3](images/level1/backtracking_ac3.gif)
+![back2-fixmp4](https://github.com/user-attachments/assets/d50ac9a3-e4da-4e19-91e3-03657526ecbb)
 
 - **Nhóm 4: Tìm kiếm trong môi trường phức tạp**
   - AND-OR Graph Search  
-    ![AND-OR Graph Search](images/level1/and_or_search.gif)
+![andorfix](https://github.com/user-attachments/assets/44343f9b-fc4a-4b57-a96e-09d7e0ac4f19)
+
 
 - **Nhóm 5: Học tăng cường (Reinforcement Learning)**
   - Q-Learning  
-    ![Q-Learning](images/level1/q_learning.gif)
+![qlearningfix](https://github.com/user-attachments/assets/1cd7c91c-d5a4-43e5-8c96-e62ecafa584b)
 
 
 ### Level 2 — Có ghost đứng yên
 
 - **Nhóm 1: Tìm kiếm không có thông tin**
   - BFS  
-    ![BFS](images/level2/bfs.gif)
+![bfs2](https://github.com/user-attachments/assets/2e5e4c1e-90c9-4237-b5be-82acbee39b7d)
+
   - DFS  
-    ![DFS](images/level2/dfs.gif)
+![dfs2](https://github.com/user-attachments/assets/2fc5eca4-b86c-4295-80bb-f3ee409d3e1e)
+
   - UCS  
-    ![UCS](images/level2/ucs.gif)
+![ucs2 (1)](https://github.com/user-attachments/assets/5c3c71a8-afc8-4abd-b8d1-5a375112bdc2)
 
 - **Nhóm 2: Tìm kiếm có thông tin**
   - Greedy Search  
-    ![Greedy Search](images/level2/greedy.gif)
+![greedy2](https://github.com/user-attachments/assets/8e7b36af-b792-4299-9649-14654a1a21d1)
+
   - Beam Search  
-    ![Beam Search](images/level2/beam_search.gif)
+![beam2](https://github.com/user-attachments/assets/ac72de3c-c69b-45b9-99d5-7da8f1f1a749)
+
   - A* Search  
-    ![A* Search](images/level2/a_star.gif)
+![a2](https://github.com/user-attachments/assets/64e95856-4c30-49e6-9080-0a665c545225)
 
 
 ### Level 3 — Ghost tuần tra khu vực
 
 - **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
   - Steepest-Ascent Hill Climbing  
-    ![Hill Climbing](images/level3/hill_climbing.gif)
+![hill3](https://github.com/user-attachments/assets/59282d83-a61b-4368-9ffd-ff31a21ad199)
+
   - Simulated Annealing  
-    ![Simulated Annealing](images/level3/simulated_annealing.gif)
+
+![si3](https://github.com/user-attachments/assets/21a34925-fbde-4cfa-9d86-b4070ab8fa8a)
 
 
 ### Level 4 — Ghost truy sát thông minh
 
-- **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
-  - Simulated Annealing  
-    ![Simulated Annealing](images/level4/simulated_annealing.gif)
-
 - **Nhóm 7: Tìm kiếm đối kháng (Adversarial Search)**
   - Minimax  
-    ![Minimax](images/level4/minimax.gif)
+
   - Alpha-Beta Pruning  
     ![Alpha-Beta Pruning](images/level4/alphabeta.gif)
 
