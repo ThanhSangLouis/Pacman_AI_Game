@@ -1,4 +1,4 @@
-# 🟡 Pacman-AI Game
+![bfs (1)](https://github.com/user-attachments/assets/da86aea4-3988-423e-8f6c-be415e3e3e92)# 🟡 Pacman-AI Game
 
 ![Home](ImageREADME/Home.png)
 
@@ -95,12 +95,15 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 ### Level 1 — Mê cung tĩnh, không có ghost
 
 - **Nhóm 1: Tìm kiếm không có thông tin (Uninformed Search)**
-  - Uniform Cost Search (UCS)  
-    ![UCS](images/level1/ucs.gif)
-  - Depth-First Search (DFS)  
-    ![DFS](images/level1/dfs.gif)
+  - Uniform Cost Search (UCS)
+    
+
+  - Depth-First Search (DFS)
+
+
   - Breadth-First Search (BFS)  
-    ![BFS](images/level1/bfs.gif)
+![bfs (1)](https://github.com/user-attachments/assets/da72d783-d6f3-49ff-80f6-ac15aaa1d247)
+
 
 - **Nhóm 2: Tìm kiếm có thông tin (Informed Search)**
   - Beam Search  
