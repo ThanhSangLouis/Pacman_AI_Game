@@ -158,7 +158,8 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 
 - **Nhóm 3: Tìm kiếm cục bộ (Local Search)**
   - Steepest-Ascent Hill Climbing  
-![hill3](https://github.com/user-attachments/assets/59282d83-a61b-4368-9ffd-ff31a21ad199)
+![hill3fixmp4](https://github.com/user-attachments/assets/6d8b7ccc-cf0c-4392-aa08-8d9e963e6014)
+
 
   - Simulated Annealing  
 
@@ -168,10 +169,11 @@ Tại mỗi cấp độ, các thuật toán được chạy thử thuộc một 
 ### Level 4 — Ghost truy sát thông minh
 
 - **Nhóm 7: Tìm kiếm đối kháng (Adversarial Search)**
-  - Minimax  
+  - Minimax
+    
 
   - Alpha-Beta Pruning  
-    ![Alpha-Beta Pruning](images/level4/alphabeta.gif)
+
 
 
 ## ⚖️ So sánh điểm số thực tế theo từng cấp độ (Level)
