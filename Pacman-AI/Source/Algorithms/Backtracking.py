@@ -39,7 +39,7 @@ def Backtracking(_map, start_pos, N, M):
         if len(current_moves) > MAX_DEPTH: # Sâu quá thì dừng lại
             return False
 
-        path = simulate_path(start_pos, current_moves) # Giả lập đường đi từ vị trí bắt đầu đến vị trí hiện tại
+        path = simulate_path(start_pos, current_moves) # Giả lập đường đi từ vị trí bắt đầu
         if not is_valid_path(_map, path, N, M): # Nếu đường đi không hợp lệ thì dừng lại
             return False
 

@@ -1,7 +1,5 @@
 from queue import PriorityQueue
-
 from Utils.utils import find_nearest_food, Manhattan, DDX, isValid
-
 
 def AStar(_map, _food_Position, start_row, start_col, N, M):
     visited = [[False for _ in range(M)] for _ in range(N)]
@@ -11,31 +9,42 @@ def AStar(_map, _food_Position, start_row, start_col, N, M):
     queue = PriorityQueue()
 
     [food_row, food_col] = find_nearest_food(_food_Position, start_row, start_col)
-
-
     start = (start_row, start_col)
     end = (food_row, food_col)
 
-    cost[(start_row, start_col)] = 0
+    cost[start] = 0
     queue.put((Manhattan(start_row, start_col, food_row, food_col), start))
+
+    expansions = 0  # ✅ Đếm số node mở rộng
 
     while not queue.empty():
         current = queue.get()[1]
-        visited[current[0]][current[1]] = True
+        r, c = current
+
+        if visited[r][c]:
+            continue
+        visited[r][c] = True
+        expansions += 1
+
         if current == end:
-            path.append([current[0], current[1]])
+            path.append([r, c])
             while current != start:
                 current = trace[current]
-                path.append([current[0], current[1]])
-            path.reverse()
+                path.insert(0, [current[0], current[1]])
+            print(f"✅ A*: Path found with {len(path)} steps, {expansions} nodes expanded.")
             return path
 
-        for [d_r, d_c] in DDX:
-            new_row, new_col = current[0] + d_r, current[1] + d_c
-            if isValid(_map, new_row, new_col, N, M) and not visited[new_row][new_col]:
-                group = (new_row, new_col)
-                cost[group] = cost[current] + 1
-                queue.put((cost[group] + Manhattan(new_row, new_col, food_row, food_col), group))
-                trace[group] = current
+        for d_r, d_c in DDX:
+            new_r, new_c = r + d_r, c + d_c
+            if isValid(_map, new_r, new_c, N, M) and not visited[new_r][new_c]:
+                neighbor = (new_r, new_c)
+                g_cost = cost[current] + 1
+                f_cost = g_cost + Manhattan(new_r, new_c, food_row, food_col)
 
-    return path
+                if neighbor not in cost or g_cost < cost[neighbor]:
+                    cost[neighbor] = g_cost
+                    trace[neighbor] = current
+                    queue.put((f_cost, neighbor))
+
+    print(f"❌ A*: No path found. {expansions} nodes expanded.")
+    return []

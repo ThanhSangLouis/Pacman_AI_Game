@@ -1,35 +1,30 @@
+from collections import deque
+from constants import MONSTER
+from Utils.utils import DDX
+
 def BFS(_map, start_row, start_col, goal_row, goal_col, N, M):
-    """
-    Thuật toán BFS thuần tìm đường đi từ điểm bắt đầu (start_row, start_col)
-    đến điểm đích (goal_row, goal_col) trên một ma trận.
-
-    Parameters:
-    - _map: Ma trận biểu diễn bản đồ.
-    - start_row, start_col: Tọa độ điểm bắt đầu.
-    - goal_row, goal_col: Tọa độ điểm đích.
-    - N, M: Kích thước của ma trận (số hàng và số cột).
-
-    Returns:
-    - path: Danh sách các ô trên đường đi từ điểm bắt đầu đến điểm đích.
-    """
-    # Tạo mảng visited (đã thăm) và trace (dấu vết) để theo dõi đường đi
     visited = [[False for _ in range(M)] for _ in range(N)]
     trace = [[[-1, -1] for _ in range(M)] for _ in range(N)]
-
-    # Khởi tạo hàng đợi BFS
-    queue = [(start_row, start_col)]
+    queue = deque([(start_row, start_col)])
     visited[start_row][start_col] = True
 
-    # Định nghĩa các hướng di chuyển (lên, xuống, trái, phải)
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    expansions = 0  # Đếm số node mở rộng
+    AVOID_RADIUS = 0  # 0: né trực tiếp ghost, 1: né xung quanh, -1: không né
 
-    # Vòng lặp BFS
+    # Thu thập vị trí ghost
+    ghost_pos = []
+    for r in range(N):
+        for c in range(M):
+            if _map[r][c] == MONSTER:
+                ghost_pos.append((r, c))
+
+    # print(f"🚀 BFS from ({start_row}, {start_col}) to ({goal_row}, {goal_col}), ghost: {len(ghost_pos)}")
+
     while queue:
-        row, col = queue.pop(0)
+        row, col = queue.popleft()
+        expansions += 1
 
-        # Kiểm tra nếu đã tới được ô đích
         if row == goal_row and col == goal_col:
-            # Truy vết lại đường đi từ điểm đích về điểm bắt đầu
             path = [[goal_row, goal_col]]
             cur_row, cur_col = goal_row, goal_col
             while True:
@@ -38,17 +33,31 @@ def BFS(_map, start_row, start_col, goal_row, goal_col, N, M):
                     break
                 path.insert(0, [prev_row, prev_col])
                 cur_row, cur_col = prev_row, prev_col
+            print(f"✅ BFS: Path found with {len(path)} steps, {expansions} nodes expanded.")
             return path
 
-        # Duyệt qua các ô kề
-        for d_r, d_c in directions:
+        for d_r, d_c in DDX:
             new_row, new_col = row + d_r, col + d_c
-            if (0 <= new_row < N and 0 <= new_col < M and  # Kiểm tra trong phạm vi
-                _map[new_row][new_col] != 1 and           # Ô không phải là vật cản
-                not visited[new_row][new_col]):          # Ô chưa được thăm
-                visited[new_row][new_col] = True
-                queue.append((new_row, new_col))
-                trace[new_row][new_col] = [row, col]
 
-    # Nếu không tìm thấy đường đi, trả về danh sách rỗng
+            if not (0 <= new_row < N and 0 <= new_col < M):
+                continue
+            if _map[new_row][new_col] == 1 or visited[new_row][new_col]:
+                continue
+
+            # Né ghost nếu cần
+            danger = False
+            if AVOID_RADIUS >= 0:
+                for g_r, g_c in ghost_pos:
+                    dist = abs(new_row - g_r) + abs(new_col - g_c)
+                    if dist <= AVOID_RADIUS:
+                        danger = True
+                        break
+            if danger:
+                continue
+
+            visited[new_row][new_col] = True
+            queue.append((new_row, new_col))
+            trace[new_row][new_col] = [row, col]
+
+    print(f"❌ BFS: No path found. {expansions} nodes expanded.")
     return []
