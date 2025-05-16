@@ -210,6 +210,7 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 | **UCS**                  | -66                | 87         | 269              | Tối ưu chi phí, nhưng trong map đồng đều thì giống hệt BFS                      |
 | **Beam Search**          | -66                | 87         | 252              | Giữ k hướng tốt nhất, nhanh hơn BFS nhưng có thể bỏ qua hướng tối ưu            |
 | **Greedy Search**        | -86                | 89         | 151              | Ưu tiên gần đích, nhanh nhưng dễ đi sai nếu map phức tạp                         |
+| **Backtracking**         | -85                | 106        | 392              | Dò từng khả năng có thể, dễ hiểu và đúng logic đệ quy, nhưng không tối ưu cho bài toán lớn, mở rộng rất nhiều node giống AC-3 |
 | **Backtracking + AC-3**  | -85                | 106        | 392              | Giải ràng buộc tốt, xử lý logic rõ ràng nhưng tốc độ hơi chậm so với các thuật toán khác   |
 | **AND-OR Graph Search**  | -96                | 116        | 1210             |  Xây dựng cây kế hoạch bao phủ tất cả trường hợp, phù hợp môi trường không xác định, nhưng **cực kỳ tốn tài nguyên** do mở rộng rất nhiều node        |
 | **Q-Learning**           | -96                | 104        | 107              | Học từ kinh nghiệm, hiệu quả khi đã huấn luyện đủ, ban đầu chạy thì chưa tối ưu nhưng nếu huấn luyện càng nhiều thì sẽ rất tối ưu    |
@@ -218,7 +219,7 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 
 - ✅ Trong môi trường chi phí đều và không có ghost, **BFS, UCS và Beam Search** đều cho đường đi ngắn với độ mở rộng tương đối nhiều nhưng hợp lý.
 - 🔴 **DFS** và **Greedy** cho kết quả kém hơn về điểm, do định hướng cục bộ và dễ lạc hướng.
-- 🔵 **Backtracking + AC-3** và **AND-OR Search** tuy xử lý được bài toán logic sâu hơn, nhưng **không cần thiết** cho bản đồ tĩnh → chi phí xử lý cao hơn nhiều.
+- 🔵 **Backtracking**, **Backtracking + AC-3** và **AND-OR Search** tuy xử lý được bài toán logic sâu hơn, nhưng **không cần thiết** cho bản đồ tĩnh → chi phí xử lý cao hơn nhiều.
 - 🟡 **Q-Learning** chưa có lợi thế trong môi trường đơn giản, do chưa khai thác được khả năng học từ tương tác lâu dài -> tức là huấn luyện chưa đủ.
 
 ---
