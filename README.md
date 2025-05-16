@@ -214,14 +214,16 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 ### Level 2 — Có ghost đứng yên
 
+Hình ảnh dưới đây minh họa kết quả chạy thực tế của các thuật toán tìm đường tại Level 2 — một bản đồ có ghost cố định, với độ khó vừa phải. Mỗi thuật toán được đánh giá dựa trên số bước đi (`steps`) và số node đã mở rộng (`expansions`). Đây là cơ sở để phân tích hiệu suất, mức độ tối ưu và khả năng tiết kiệm tài nguyên của từng thuật toán.
+
 ![Home](ImageREADME/Kq_lv2.png)
 
 | Thuật toán       | 🎯 Điểm trung bình | 👣 Bước đi | 🔍 Node mở rộng | 📌 Đặc điểm chính                                                                 |
 |------------------|--------------------|------------|------------------|----------------------------------------------------------------------------------|
-| **BFS**          | 0                  | 21         | 81               | Tìm đường ngắn nhất về bước đi, mở rộng toàn diện, không né ghost               |
+| **BFS**          | 0                  | 21         | 81               | Tìm đường ngắn nhất về bước đi, mở rộng toàn diện cả map             |
 | **DFS**          | -4                 | 25         | 28               | Đi sâu nhanh, dễ lạc hướng, mở ít node nhưng không tối ưu                       |
 | **UCS**          | 0                  | 21         | 76               | Tối ưu tổng chi phí, né ghost bằng cost, nhưng mở rộng nhiều hơn               |
-| **Greedy**       | -4                 | 25         | 27               | Nhanh, mở rất ít node, nhưng dễ đi sai và bị ghost bắt                          |
+| **Greedy**       | -4                 | 25         | 27               | Nhanh, mở rất ít node, nhưng dễ đi sai                         |
 | **Beam Search**  | 0                  | 21         | 47               | Chọn lọc hướng tốt bằng heuristic, cân bằng giữa tốc độ và chất lượng          |
 | **A\***          | 0                  | 21         | 49               | Dùng `g(n) + h(n)` để tìm đường tối ưu, né ghost hiệu quả, mở rộng hợp lý       |
 

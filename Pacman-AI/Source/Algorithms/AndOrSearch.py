@@ -25,46 +25,44 @@ def is_goal(food_pos, row, col):
     return (row, col) in food_pos
 
 def and_or_graph_search(_map, state, N, M, goal_set):
+    expansions = [0]  # ✅ Đếm số node đã mở rộng
+
     def andorsearch(state, path):
-        print("🟡 OR node:", state)  # Đây là node OR: lựa chọn hành động từ trạng thái hiện tại
-
+        expansions[0] += 1
         if is_goal(goal_set, state[0], state[1]):
-            print("🎯 REACHED GOAL at", state)
             return 'GOAL'
-
         if state in path:
-            print("🔁 LOOP DETECTED at", state)
             return 'FAILURE'
+        path = path + [state]
 
-        path = path + [state]  # Sao chép path, không sửa path gốc
-
-        # Duyệt từng hành động có thể thực hiện từ state hiện tại (node OR)
         for action in ACTIONS:
             outcomes = apply_action(state, action, _map, N, M)
             subplans = []
-
-            print(f"    ⚙️ AND node for action '{action}': outcomes = {outcomes}")  
-            # Node AND thể hiện các kết quả khác nhau của 1 hành động phải đều thành công
-
-            # Với mỗi kết quả có thể của hành động, gọi đệ quy
             for outcome in outcomes:
-                if outcome != state:  # Nếu trạng thái mới khác trạng thái hiện tại
-                    subplan = andorsearch(outcome, path)
-                    if subplan == 'FAILURE':
-                        print(f"    ❌ Outcome {outcome} của action '{action}' thất bại, bỏ qua action này")
-                        break  # Nếu một outcome fail, bỏ luôn hành động này
-                    subplans.append(subplan)
-
-            # Nếu tất cả các outcomes đều thành công (đủ số), trả về kế hoạch
+                if outcome != state:
+                    result = andorsearch(outcome, path)
+                    if result == 'FAILURE':
+                        break
+                    subplans.append(result)
             if len(subplans) == len(outcomes):
-                print(f"    ✅ Action '{action}' thành công với subplans: {subplans}")
                 return (action, subplans)
-
-        # Nếu không hành động nào thành công, trả về failure
-        print(f"❌ OR node tại {state} không có hành động thành công")
         return 'FAILURE'
 
-    return andorsearch(state, [])
+    plan = andorsearch(state, [])
+
+    def count_steps(plan):
+        if not isinstance(plan, tuple):
+            return 0
+        _, subplans = plan
+        return 1 + max((count_steps(p) for p in subplans if isinstance(p, tuple)), default=0)
+
+    if plan == 'FAILURE':
+        print(f"❌ AND-OR: No plan found. {expansions[0]} nodes expanded.")
+    else:
+        steps = count_steps(plan)
+        print(f"✅ AND-OR: Plan found with {steps} steps, {expansions[0]} nodes expanded.")
+
+    return plan
 
 def extract_next_action(plan):
     if isinstance(plan, tuple):

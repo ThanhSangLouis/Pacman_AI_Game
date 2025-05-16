@@ -328,7 +328,7 @@ def startGame() -> None:
                         # Nếu chưa có kế hoạch hoặc PacMan đã đạt mục tiêu, tạo kế hoạch mới
                         if plan is None or is_goal(food_pos, pos[0], pos[1]):
                             plan = and_or_graph_search(_map, pos, N, M, food_pos)
-                            print(f"📌 New plan from {pos}")
+                            # print(f"📌 New plan from {pos}")
 
                         # Nếu kế hoạch tồn tại và là một tuple, thực hiện bước tiếp theo
                         if isinstance(plan, tuple):
@@ -338,7 +338,7 @@ def startGame() -> None:
                             # Kiểm tra tính hợp lệ của vị trí mới
                             if isValid2(_map, new_pos[0], new_pos[1], N, M):
                                 new_PacMan_Pos = list(new_pos)
-                                print(f"➡️ PacMan sẽ đi {action} đến {new_PacMan_Pos}")
+                                # print(f"➡️ PacMan sẽ đi {action} đến {new_PacMan_Pos}")
                             else:
                                 print("⚠️ Hành động không hợp lệ:", action)
                                 new_PacMan_Pos = list(pos)  # Giữ nguyên vị trí nếu hành động không hợp lệ
