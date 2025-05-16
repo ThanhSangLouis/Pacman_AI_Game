@@ -330,7 +330,7 @@ Dự án được thực hiện bởi nhóm sinh viên lớp AI:
 
 - **Lê Văn Chiến Thắng**  
 - **Võ Thanh Sang**  
-- **Trình Nguyễn Hoàng Nguyên**
+- **Trịnh Nguyễn Hoàng Nguyên**
 
 Trường Đại học Sư phạm Kỹ thuật TP.HCM  
 Môn học: Trí tuệ Nhân tạo  
