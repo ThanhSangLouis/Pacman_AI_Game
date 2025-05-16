@@ -186,14 +186,14 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 | Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
 |----------------------------|--------------------|--------------------------------------------|
-| BFS                        | 1150               | Tìm đường ngắn, chạy ổn định                |
-| DFS                        | 850                | Dễ lạc đường, không hiệu quả                 |
-| UCS                        | 1200               | Tối ưu chi phí đường đi                       |
-| Beam Search                | 1250               | Giữ nhiều lựa chọn, nhanh hơn BFS             |
-| Greedy Search              | 1180               | Nhanh nhưng không luôn tìm được đường tối ưu  |
-| Backtracking + AC-3        | 1100               | Xử lý ràng buộc tốt, có thể chậm hơn         |
-| AND-OR Graph Search        | 1050               | Xử lý trạng thái phức tạp                     |
-| Q-Learning                 | 1000               | Học từ kinh nghiệm, chưa tối ưu ngay          |
+| BFS                        | -66             | Tìm đường ngắn, chạy ổn định                |
+| DFS                        | -86                | Dễ lạc đường, không hiệu quả                 |
+| UCS                        | -66              | Tối ưu chi phí đường đi                       |
+| Beam Search                | -66               | Giữ nhiều lựa chọn, nhanh hơn BFS             |
+| Greedy Search              | -86               | Nhanh nhưng không luôn tìm được đường tối ưu  |
+| Backtracking + AC-3        | -85               | Xử lý ràng buộc tốt, có thể chậm hơn         |
+| AND-OR Graph Search        | -96              | Xử lý trạng thái phức tạp                     |
+| Q-Learning                 | -96               | Học từ kinh nghiệm, chưa tối ưu ngay          |
 
 ---
 
@@ -201,12 +201,12 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 | Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
 |----------------------------|--------------------|--------------------------------------------|
-| BFS                        | 1050               | Chậm và có thể bị ghost bắt                  |
-| DFS                        | 800                | Ít hiệu quả, dễ mắc bẫy ghost                  |
-| UCS                        | 1100               | Tối ưu đường đi, tránh ghost phần nào          |
-| Greedy Search              | 1150               | Tốt với heuristic đơn giản                    |
-| Beam Search                | 1200               | Cân bằng giữa tốc độ và hiệu quả               |
-| A* Search                  | 1300               | Tìm đường nhanh, thông minh tránh ghost        |
+| BFS                        | 0               | Chậm và có thể bị ghost bắt                  |
+| DFS                        | -4                | Ít hiệu quả, dễ mắc bẫy ghost                  |
+| UCS                        | 0               | Tối ưu đường đi, tránh ghost phần nào          |
+| Greedy Search              | -4               | Tốt với heuristic đơn giản                    |
+| Beam Search                | 0               | Cân bằng giữa tốc độ và hiệu quả               |
+| A* Search                  | 0               | Tìm đường nhanh, thông minh tránh ghost        |
 
 ---
 
@@ -214,8 +214,8 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 | Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
 |----------------------------|--------------------|--------------------------------------------|
-| Simulated Annealing        | 1150               | Có thể vượt local maxima, tránh ghost hiệu quả  |
-| SA Hill Climbing           | 1100               | Nhanh nhưng có thể mắc kẹt                      |
+| Simulated Annealing        | 207               | Có thể vượt local maxima, tránh ghost hiệu quả  |
+| SA Hill Climbing           | 137               | Nhanh nhưng có thể mắc kẹt                      |
 
 ---
 
@@ -223,9 +223,8 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 | Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
 |----------------------------|--------------------|--------------------------------------------|
-| Simulated Annealing        | 1100               | Khó khăn do ghost thông minh, vẫn có thể vượt local maxima  |
-| Minimax                    | 1250               | Tính đối kháng, rất cẩn thận tránh ghost        |
-| Alpha-Beta Pruning         | 1280               | Tối ưu Minimax, nhanh hơn với độ sâu lớn        |
+| Minimax                    | 5157               | Tính đối kháng, rất cẩn thận tránh ghost        |
+| Alpha-Beta Pruning         | 5157             | Tối ưu Minimax, nhanh hơn với độ sâu lớn        |
 
 ---
 
