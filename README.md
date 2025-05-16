@@ -201,28 +201,41 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 | Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
 |----------------------------|--------------------|--------------------------------------------|
-| BFS                        | -66             | Tìm đường ngắn, chạy ổn định                |
+| BFS                        | -66             | 	Tìm đường ít bước nhất nếu chi phí đều, chạy ổn định, không xét chi phí thật -> kết quả sẽ tối ưu tương tự UCS trong level này vì cùng 1 chi phí cho các ô trong map          |
 | DFS                        | -86                | Dễ lạc đường, không hiệu quả                 |
 | UCS                        | -66              | Tối ưu chi phí đường đi                       |
-| Beam Search                | -66               | Giữ nhiều lựa chọn, nhanh hơn BFS             |
-| Greedy Search              | -86               | Nhanh nhưng không luôn tìm được đường tối ưu  |
-| Backtracking + AC-3        | -85               | Xử lý ràng buộc tốt, có thể chậm hơn         |
-| AND-OR Graph Search        | -96              | Xử lý trạng thái phức tạp                     |
-| Q-Learning                 | -96               | Học từ kinh nghiệm, chưa tối ưu ngay          |
+| Beam Search                | -66               | Giữ k hướng tốt nhất, nhanh hơn BFS nhưng dễ bỏ lỡ hướng tối ưu             |
+| Greedy Search              | -86               | 	Ưu tiên gần đích, nhanh nhưng dễ chọn sai, không xét toàn cục |
+| Backtracking + AC-3        | -85               | 	Giải ràng buộc tốt, phù hợp logic phức tạp, nhưng chậm         |
+| AND-OR Graph Search        | -96              | 	Duyệt theo cây AND-OR, xử lý môi trường phức tạp          |
+| Q-Learning                 | -96               | Học từ kinh nghiệm, cần thời gian huấn luyện, ban đầu dễ chọn sai       |
 
 ---
 
 ### Level 2 — Có ghost đứng yên
 
-| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
-|----------------------------|--------------------|--------------------------------------------|
-| BFS                        | 0               | Chậm và có thể bị ghost bắt                  |
-| DFS                        | -4                | Ít hiệu quả, dễ mắc bẫy ghost                  |
-| UCS                        | 0               | Tối ưu đường đi, tránh ghost phần nào          |
-| Greedy Search              | -4               | Tốt với heuristic đơn giản                    |
-| Beam Search                | 0               | Cân bằng giữa tốc độ và hiệu quả               |
-| A* Search                  | 0               | Tìm đường nhanh, thông minh tránh ghost        |
+![Home](ImageREADME/Kq_lv2)
 
+| Thuật toán       | 🎯 Điểm trung bình | 👣 Bước đi | 🔍 Node mở rộng | 📌 Đặc điểm chính                                                                 |
+|------------------|--------------------|------------|------------------|----------------------------------------------------------------------------------|
+| **BFS**          | 0                  | 21         | 81               | Tìm đường ngắn nhất về bước đi, mở rộng toàn diện, không né ghost               |
+| **DFS**          | -4                 | 25         | 28               | Đi sâu nhanh, dễ lạc hướng, mở ít node nhưng không tối ưu                       |
+| **UCS**          | 0                  | 21         | 76               | Tối ưu tổng chi phí, né ghost bằng cost, nhưng mở rộng nhiều hơn               |
+| **Greedy**       | -4                 | 25         | 27               | Nhanh, mở rất ít node, nhưng dễ đi sai và bị ghost bắt                          |
+| **Beam Search**  | 0                  | 21         | 47               | Chọn lọc hướng tốt bằng heuristic, cân bằng giữa tốc độ và chất lượng          |
+| **A\***          | 0                  | 21         | 49               | Dùng `g(n) + h(n)` để tìm đường tối ưu, né ghost hiệu quả, mở rộng hợp lý       |
+
+---
+
+### 🔎 Nhận xét & Kết luận
+
+- 🟢 **A\*** và **Beam Search** là hai thuật toán hoạt động hiệu quả nhất tại Level 2 — vừa đảm bảo được độ tối ưu, vừa kiểm soát được số node mở rộng.
+- 🔵 **UCS** tìm đường an toàn với ghost nhưng phải đánh đổi bằng số lượng node mở rộng nhiều hơn.
+- 🟡 **BFS** tuy ổn định và tìm được đường đi tối ưu nhưng tốn tài nguyên.
+- 🔴 **DFS** và **Greedy** mở rất ít node nhưng thường đi sai hướng, dẫn đến đường đi dài và không hiệu quả.
+- ✅ Trong môi trường có ghost, **heuristic tốt** và **cân bằng giữa `g(n)` và `h(n)`** là yếu tố then chốt giúp thuật toán hiệu quả hơn.
+
+> 🎯 Tùy thuộc vào mục tiêu (tối ưu hóa, tốc độ hay tiết kiệm bộ nhớ), người dùng có thể lựa chọn thuật toán phù hợp thay vì chỉ dựa vào kết quả đường đi.
 ---
 
 ### Level 3 — Ghost tuần tra khu vực
