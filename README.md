@@ -199,16 +199,29 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 ### Level 1 — Mê cung tĩnh, không có ghost
 
-| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
-|----------------------------|--------------------|--------------------------------------------|
-| BFS                        | -66             | 	Tìm đường ít bước nhất nếu chi phí đều, chạy ổn định, không xét chi phí thật -> kết quả sẽ tối ưu tương tự UCS trong level này vì cùng 1 chi phí cho các ô trong map          |
-| DFS                        | -86                | Dễ lạc đường, không hiệu quả                 |
-| UCS                        | -66              | Tối ưu chi phí đường đi                       |
-| Beam Search                | -66               | Giữ k hướng tốt nhất, nhanh hơn BFS nhưng dễ bỏ lỡ hướng tối ưu             |
-| Greedy Search              | -86               | 	Ưu tiên gần đích, nhanh nhưng dễ chọn sai, không xét toàn cục |
-| Backtracking + AC-3        | -85               | 	Giải ràng buộc tốt, phù hợp logic phức tạp, nhưng chậm         |
-| AND-OR Graph Search        | -96              | 	Duyệt theo cây AND-OR, xử lý môi trường phức tạp          |
-| Q-Learning                 | -96               | Học từ kinh nghiệm, cần thời gian huấn luyện, ban đầu dễ chọn sai       |
+Hình ảnh dưới đây minh họa kết quả chạy thực tế của các thuật toán tìm đường tại Level 1 — một bản đồ mê cung tĩnh, không có ghost và chi phí di chuyển giữa các ô là như nhau. Đây là môi trường đơn giản nhưng là cơ sở để đánh giá khả năng tìm đường tối ưu (về bước đi và chi phí) của từng thuật toán trong điều kiện cơ bản nhất.
+
+![Home](ImageREADME/Kq_lv1.png)
+
+| Thuật toán               | 🎯 Điểm trung bình | 👣 Bước đi | 🔍 Node mở rộng | 📌 Đặc điểm chính                                                                 |
+|--------------------------|--------------------|------------|------------------|----------------------------------------------------------------------------------|
+| **BFS**                  | -66                | 87         | 269              | Tìm đường ngắn nếu chi phí đều, ổn định, chi phí mỗi ô đều như nhau nên tương đối giống UCS ở level này |
+| **DFS**                  | -86                | 107        | 170              | Đi sâu dễ lạc hướng, không tối ưu, mở ít node                                    |
+| **UCS**                  | -66                | 87         | 269              | Tối ưu chi phí, nhưng trong map đồng đều thì giống hệt BFS                      |
+| **Beam Search**          | -66                | 87         | 252              | Giữ k hướng tốt nhất, nhanh hơn BFS nhưng có thể bỏ qua hướng tối ưu            |
+| **Greedy Search**        | -86                | 89         | 151              | Ưu tiên gần đích, nhanh nhưng dễ đi sai nếu map phức tạp                         |
+| **Backtracking + AC-3**  | -85                | 106        | 392              | Giải ràng buộc tốt, xử lý logic rõ ràng nhưng tốc độ hơi chậm so với các thuật toán khác   |
+| **AND-OR Graph Search**  | -96                | 116        | 1210             |  Xây dựng cây kế hoạch bao phủ tất cả trường hợp, phù hợp môi trường không xác định, nhưng **cực kỳ tốn tài nguyên** do mở rộng rất nhiều node        |
+| **Q-Learning**           | -96                | 104        | 107              | Học từ kinh nghiệm, hiệu quả khi đã huấn luyện đủ, ban đầu chạy thì chưa tối ưu nhưng nếu huấn luyện càng nhiều thì sẽ rất tối ưu    |
+
+---
+
+### 🔎 Nhận xét & Kết luận
+
+- ✅ Trong môi trường chi phí đều và không có ghost, **BFS, UCS và Beam Search** đều cho đường đi ngắn với độ mở rộng tương đối nhiều nhưng hợp lý.
+- 🔴 **DFS** và **Greedy** cho kết quả kém hơn về điểm, do định hướng cục bộ và dễ lạc hướng.
+- 🔵 **Backtracking + AC-3** và **AND-OR Search** tuy xử lý được bài toán logic sâu hơn, nhưng **không cần thiết** cho bản đồ tĩnh → chi phí xử lý cao hơn nhiều.
+- 🟡 **Q-Learning** chưa có lợi thế trong môi trường đơn giản, do chưa khai thác được khả năng học từ tương tác lâu dài -> tức là huấn luyện chưa đủ.
 
 ---
 
@@ -242,19 +255,42 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 
 ### Level 3 — Ghost tuần tra khu vực
 
-| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
-|----------------------------|--------------------|--------------------------------------------|
-| Simulated Annealing        | 207               | Có thể vượt local maxima, tránh ghost hiệu quả  |
-| SA Hill Climbing           | 137               | Nhanh nhưng có thể mắc kẹt                      |
+Tại Level 3, ghost di chuyển tuần tra trên bản đồ khiến môi trường trở nên **động và khó đoán**. Các thuật toán phải thích nghi linh hoạt để vừa **né ghost**, vừa **tối ưu điểm số**. Dưới đây là so sánh giữa hai chiến lược:
+
+| Thuật toán                | 🎯 Điểm trung bình | 📌 Đặc điểm chính                                                  |
+|---------------------------|--------------------|-------------------------------------------------------------------|
+| **Simulated Annealing**   | **207**            | Có khả năng "liều" chọn bước tạm thời kém để **thoát local maxima**, **né ghost hiệu quả** |
+| **SA Hill Climbing**      | **137**            | **Nhanh, chọn bước tốt nhất**, nhưng dễ **mắc kẹt** nếu không có hướng đi tốt hơn, phải random hướng bất kì để thoát kẹt |
+
+
+### 🔎 Nhận xét & Kết luận
+
+- **Simulated Annealing** đạt điểm số cao hơn rõ rệt, nhờ khả năng **thoát khỏi bẫy cục bộ (local optima)** và thích nghi tốt trong môi trường ghost di chuyển.
+- **SA Hill Climbing** tuy đơn giản và nhanh, nhưng lại dễ di chuyển quanh tại những khu vực tưởng chừng tối ưu — đặc biệt khi không thể đi hướng nào tốt hơn thì nó thoát ra bằng cách random 1 hướng đi mới.
+- ✅ Với độ phức tạp của Level 3, **Simulated Annealing tỏ ra đáng tin cậy hơn** nhờ khả năng **chấp nhận rủi ro có kiểm soát** và **khám phá không gian trạng thái rộng hơn**.
+
+> 🧠 Trong môi trường AI game động ở level này, **Nhóm thuật toán tìm kiếm cục bộ đạt ưu thế vượt trội, các nhóm khác khi áp dụng vào rất khó thắng**.
 
 ---
 
 ### Level 4 — Ghost truy sát thông minh
 
-| Thuật toán                  | Điểm số trung bình | Đặc điểm chính                              |
-|----------------------------|--------------------|--------------------------------------------|
-| Minimax                    | 5157               | Tính đối kháng, rất cẩn thận tránh ghost        |
-| Alpha-Beta Pruning         | 5157             | Tối ưu Minimax, nhanh hơn với độ sâu lớn        |
+Tại Level 4, ghost không còn di chuyển ngẫu nhiên hay tuần tra đơn thuần mà được lập trình **truy sát Pacman một cách chủ động và thông minh hơn**. Đây là môi trường mang tính đối kháng cao, yêu cầu thuật toán phải **phán đoán hành vi đối phương** và **lập kế hoạch nhiều bước**.
+
+| Thuật toán              | 🎯 Điểm trung bình | 📌 Đặc điểm chính                                                        |
+|-------------------------|--------------------|-------------------------------------------------------------------------|
+| **Minimax**             | **5157**           | Mô hình hóa trò chơi hai người chơi (Pacman vs Ghost), **ra quyết định thận trọng**, luôn chọn hành động tối ưu nhất để **né ghost** |
+| **Alpha-Beta Pruning**  | **5157**           | Phiên bản tối ưu của Minimax, **cắt bớt các nhánh không cần thiết**, giúp **tăng tốc độ** mà vẫn giữ nguyên chất lượng quyết định |
+
+---
+
+### 🔍 Nhận xét & Kết luận
+
+- Cả **Minimax** và **Alpha-Beta Pruning** đều mang lại chiến thắng với **điểm số rất cao**, thể hiện khả năng thích ứng vượt trội trong môi trường ghost truy đuổi.
+- **Alpha-Beta Pruning** đặc biệt hiệu quả khi tăng độ sâu tìm kiếm, vì nó **loại bỏ những lựa chọn không cần thiết**, từ đó **tiết kiệm thời gian** mà không ảnh hưởng đến kết quả cuối cùng.
+- ✅ Trong môi trường có sự đối kháng rõ rệt như Level 4, **thuật toán chiến lược như Minimax và Alpha-Beta Pruning là lựa chọn tối ưu**, vì chúng không chỉ tìm đường mà còn **phản ứng theo hành vi của đối thủ**.
+
+> 🧠 Đây là minh chứng rõ ràng rằng: khi trò chơi không còn là một môi trường tĩnh, **các chiến lược ra quyết định với tư duy đối kháng sẽ chiếm ưu thế vượt trội**.
 
 ---
 
