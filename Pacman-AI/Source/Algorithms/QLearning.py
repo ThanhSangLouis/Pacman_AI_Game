@@ -48,27 +48,42 @@ def QLearning(_map, _food_Position, row, col, N, M):
         return []
 
     if len(q_table) == 0:
-        load_q_table()  # Tự động tải Q-table đã huấn luyện
+        load_q_table()
 
-    state = encode_state(row, col, _food_Position)
-    action = choose_action(state) # Chọn hành động theo chiến lược epsilon-greedy
-    # Sử dụng hành động đã chọn để tính vị trí mới cho Pacman
-    d_r, d_c = DDX[action]
-    new_row, new_col = row + d_r, col + d_c
+    steps = 0  # số bước hợp lệ (di chuyển)
+    expansions = 0  # số hành động Q-Learning thực hiện
+    path = [[row, col]]
+    current_row, current_col = row, col
+    food = _food_Position.copy()
 
-    if not isValid2(_map, new_row, new_col, N, M):
-        reward = -10
-        new_row, new_col = row, col
-    else:
-        reward = -0.5
+    while len(food) > 0:
+        expansions += 1
+        state = encode_state(current_row, current_col, food)
+        action = choose_action(state)
 
-    if _map[new_row][new_col] == FOOD:
-        reward += 50
+        d_r, d_c = DDX[action]
+        new_row, new_col = current_row + d_r, current_col + d_c
 
-    # Nếu Pacman ăn FOOD -> loại vị trí đó khỏi danh sách next_food
-    next_food = [f for f in _food_Position if f != [new_row, new_col]]
-    next_state = encode_state(new_row, new_col, next_food)
+        if not isValid2(_map, new_row, new_col, N, M):
+            reward = -10
+            new_row, new_col = current_row, current_col
+        else:
+            reward = -0.5
 
-    update_q(state, action, reward, next_state)
+        if [new_row, new_col] in food:
+            reward += 50
+            food.remove([new_row, new_col])
 
-    return [new_row, new_col]
+        next_state = encode_state(new_row, new_col, food)
+        update_q(state, action, reward, next_state)
+
+        # Chỉ tăng step khi có di chuyển thật
+        if [new_row, new_col] != [current_row, current_col]:
+            path.append([new_row, new_col])
+            steps += 1
+
+        current_row, current_col = new_row, new_col
+
+    print(f"✅ Q-Learning: Path found with {steps} steps, {expansions} nodes expanded")
+    return path[1:]  # bỏ vị trí ban đầu
+

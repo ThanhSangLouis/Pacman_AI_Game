@@ -349,7 +349,11 @@ def startGame() -> None:
                             new_PacMan_Pos = list(pos)  # Giữ nguyên vị trí
 
                     elif algorithm == "Q-Learning":
-                        new_PacMan_Pos = search.execute(ALGORITHMS=algorithm)
+                        if len(result) == 0:
+                            result = search.execute(ALGORITHMS=algorithm)
+                        if len(result) > 0:
+                            new_PacMan_Pos = result.pop(0)
+
 
                     elif algorithm in ["UCS", "DFS", "BFS", "Beam Search", "Greedy", "Backtracking","Backtracking_ver2", "A*"]:
 
