@@ -1,5 +1,4 @@
-![bfs (1)](https://github.com/user-attachments/assets/da86aea4-3988-423e-8f6c-be415e3e3e92)# 🟡 Pacman-AI Game
-
+# 🟡 Pacman-AI Game
 ![Home](ImageREADME/Home.png)
 
 ## 🎯 GIỚI THIỆU TỔNG QUAN
