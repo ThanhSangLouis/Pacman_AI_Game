@@ -214,8 +214,6 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 | **AND-OR Graph Search**  | -96                | 116        | 1210             |  Xây dựng cây kế hoạch bao phủ tất cả trường hợp, phù hợp môi trường không xác định, nhưng **cực kỳ tốn tài nguyên** do mở rộng rất nhiều node        |
 | **Q-Learning**           | -96                | 104        | 107              | Học từ kinh nghiệm, hiệu quả khi đã huấn luyện đủ, ban đầu chạy thì chưa tối ưu nhưng nếu huấn luyện càng nhiều thì sẽ rất tối ưu    |
 
----
-
 ### 🔎 Nhận xét & Kết luận
 
 - ✅ Trong môi trường chi phí đều và không có ghost, **BFS, UCS và Beam Search** đều cho đường đi ngắn với độ mở rộng tương đối nhiều nhưng hợp lý.
@@ -240,8 +238,6 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 | **Beam Search**  | 0                  | 21         | 47               | Chọn lọc hướng tốt bằng heuristic, cân bằng giữa tốc độ và chất lượng          |
 | **A\***          | 0                  | 21         | 49               | Dùng `g(n) + h(n)` để tìm đường tối ưu, né ghost hiệu quả, mở rộng hợp lý       |
 
----
-
 ### 🔎 Nhận xét & Kết luận
 
 - 🟢 **A\*** và **Beam Search** là hai thuật toán hoạt động hiệu quả nhất tại Level 2 — vừa đảm bảo được độ tối ưu, vừa kiểm soát được số node mở rộng.
@@ -251,6 +247,7 @@ Hình ảnh dưới đây minh họa kết quả chạy thực tế của các t
 - ✅ Trong môi trường có ghost, **heuristic tốt** và **cân bằng giữa `g(n)` và `h(n)`** là yếu tố then chốt giúp thuật toán hiệu quả hơn.
 
 > 🎯 Tùy thuộc vào mục tiêu (tối ưu hóa, tốc độ hay tiết kiệm bộ nhớ), người dùng có thể lựa chọn thuật toán phù hợp thay vì chỉ dựa vào kết quả đường đi.
+
 ---
 
 ### Level 3 — Ghost tuần tra khu vực
@@ -281,8 +278,6 @@ Tại Level 4, ghost không còn di chuyển ngẫu nhiên hay tuần tra đơn 
 |-------------------------|--------------------|-------------------------------------------------------------------------|
 | **Minimax**             | **5157**           | Mô hình hóa trò chơi hai người chơi (Pacman vs Ghost), **ra quyết định thận trọng**, luôn chọn hành động tối ưu nhất để **né ghost** |
 | **Alpha-Beta Pruning**  | **5157**           | Phiên bản tối ưu của Minimax, **cắt bớt các nhánh không cần thiết**, giúp **tăng tốc độ** mà vẫn giữ nguyên chất lượng quyết định |
-
----
 
 ### 🔍 Nhận xét & Kết luận
 
