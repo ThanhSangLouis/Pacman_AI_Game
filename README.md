@@ -214,7 +214,7 @@ Ta thực hiện chạy thử đồng loạt các thuật toán trong từng lev
 
 ### Level 2 — Có ghost đứng yên
 
-![Home](ImageREADME/Kq_lv2)
+![Home](ImageREADME/Kq_lv2.png)
 
 | Thuật toán       | 🎯 Điểm trung bình | 👣 Bước đi | 🔍 Node mở rộng | 📌 Đặc điểm chính                                                                 |
 |------------------|--------------------|------------|------------------|----------------------------------------------------------------------------------|

@@ -1,6 +1,6 @@
 from Utils.utils import isValid, DDX, Manhattan
 
-def BeamSearch(_map, food_pos, row, col, N, M, beam_width=2):
+def BeamSearch(_map, food_pos, row, col, N, M, beam_width=5):
     if not food_pos:
         return []
     
